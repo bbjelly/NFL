@@ -1,0 +1,131 @@
+/*GENERAL WRAP-UPS*/
+body {
+    background-color: #F6F6F6;
+}
+#header {
+    margin-bottom: 50px;
+    font-family: sans-serif;
+    color: #2B2B2B;
+}
+hr {
+    border-color:#DE1B1B;
+    border-width: 3px;
+/*
+    border: 0;
+    height: 0;  Firefox... 
+    box-shadow: 0 0 10px 1px black;
+*/
+}
+/*SVG*/
+.left-align{
+    float:left;    
+    width: 50%;
+    overflow: auto;
+}
+.scrollBox {
+    width: 100%;
+    overflow: auto;
+    cursor: default; 
+}
+svg {
+    background-color: #2B2B2B;
+}
+
+/*SELECT OPTION*/
+.select_style {
+    background: #FFF;
+    overflow: hidden;
+    display: inline-block;
+    color: #525252;
+    font-weight: 300;
+    -webkit-border-radius: 5px 4px 4px 5px/5px 5px 4px 4px;
+    -moz-border-radius: 5px 4px 4px 5px/5px 5px 4px 4px;
+    border-radius: 5px 4px 4px 5px/5px 5px 4px 4px;
+    -webkit-box-shadow: 0 0 5px rgba(123, 123, 123, 0.2);
+    -moz-box-shadow: 0 0 5px rgba(123,123,123,.2);
+    box-shadow: 0 0 5px rgba(123, 123, 123, 0.2);
+    border: solid 2px #DADADA;
+    font-family: "helvetica neue",arial;
+    position: relative;
+    cursor: pointer;
+    padding-right:20px;
+}
+.select_style span {
+    position: absolute;
+    right: 10px;
+    width: 8px;
+    height: 8px;
+    background: url(http://projects.authenticstyle.co.uk/niceselect/arrow.png) no-repeat;
+    top: 50%;
+    margin-top: -4px;
+}
+.select_style select {
+    -webkit-appearance: none;
+    appearance:none;
+    width:120%;
+    background:none;
+    background:transparent;
+    border:none;
+    outline:none;
+    cursor:pointer;
+    padding:7px 10px;
+}
+
+/*
+.teamroster {
+    -webkit-appearance: none;
+    appearance:none;
+    width:120%;
+    background:none;
+    background:transparent;
+    border:none;
+    outline:none;
+    height: auto;
+    width: auto;
+    font-size: 25px;
+    border: none;
+    background-color: aquamarine;
+    color: blueviolet;
+    opacity: .5;
+}
+*/
+#teamNames:hover {
+/*
+    background-color: aliceblue;
+    color: blue;
+    opacity: .8;
+*/
+}
+#teamNames option {
+/*    background: aliceblue;*/
+}
+
+/*GRAPH LABELS*/
+.domain {
+    display: none;
+}
+.yAxis {
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+
+.positionLabel {
+    font-weight: bold;
+    border: none;
+}
+.domain {
+    display: none;
+}
+
+/*PREVIEW*/
+.previewWrap {
+    position:absolute;
+    border:3px solid #ccc;
+    background:#333;
+    padding:5px;
+/*    display:none;*/
+    color:#fff;
+    box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
+}
+

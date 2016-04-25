@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<head>
+    <title> NFL - PRO TEAMS</title>
+    <script src="jquery-1.12.2.min.js"></script>
+    <script src="jquery-migrate-1.2.1.min.js"></script>
+    <link href="nfl2.css" rel="stylesheet" type="text/css">
+    <script src = "d3.min.js"></script>
+    <script src = "nfl.js"></script>
+</head>
+<body>
+<!--
+    <h1>Team Lists</h1>
+    <ul style="list-style-type:none">
+        <li>
+            <a href="AT_Falcons.html">Atlanta Falcons</a>
+        </li>
+        <li>
+            <a href="AR_Cardinals.html">Arizona Cardinals</a>
+        </li>
+    </ul>
+-->
+    <div id = "header">
+        <h1>NFL Players Visualization</h1>
+    </div>
+    <div id = "positionCheck"></div>
+    <div id="legend"></div>
+  <br/>
+    <div class="scrollBox">
+        <div class="left-align" id='canvas'>
+           
+            <div class="select_style">
+                <span></span>
+                <select name="filter" id = "teamNames" class="teamroster"></select>
+            </div>
+             <hr>
+            <div class="logo" id="logo1"><img src="images/Arizona%20Cardinals.png"></div>
+<!--            <hr>-->
+        </div>
+        
+        <div class="left-align"  id = 'canvas2'>
+            
+            <div class="select_style">
+                <span></span>
+                <select id="teamNames2" class="teamroster"></select>
+            </div>
+            <hr>
+           <div class="logo" id = "logo2"><img src="images/Arizona%20Cardinals.png"></div>
+<!--            <hr>-->
+        </div>
+    </div>
+  <br/>
+    
+    
+    
+    <!-- Button trigger modal -->
+<!--
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Launch demo modal
+</button>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    </div>
+    </div>
+-->
+</body>
+</html>
