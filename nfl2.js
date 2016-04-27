@@ -301,13 +301,36 @@ function createChart(drafts,svg) {
         .attr("class", "positionLabel")
         .text(function(d) {
         return d.position;
-    })
+        })
         .attr("x", function(d,i) {
              return position(d)-10
          })
         .attr("y", function(d) { 
             return yPosition(d)+5;
          })
+        .on("mouseover", function(d) {
+            var divText = d3.selectAll("body")
+                .append("div")
+                .attr("class", "previewWrap")
+                .attr("width", "200px")
+            divText
+                .append("p")
+                .text("Name: " + d.name);
+            divText
+                .append("p")
+                .text("School: " + d.school)
+            divText
+                .append("p")
+                .text("Round: " + d.round)
+        })
+     .on("mousemove", function() {
+            d3.selectAll(".previewWrap")
+                .style("top",(d3.mouse(document.body)[1] + 40) + "px")
+                .style("left",(d3.mouse(document.body)[0] + 20) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.selectAll(".previewWrap").remove();
+        })
     // Add the Y Axis
     svg.append("g")
         .attr("class", "yAxis")
