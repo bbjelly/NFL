@@ -38,6 +38,25 @@ hr {
 /*CIRCLES*/
 
 /*SELECT OPTION*/
+.teamroster {
+    border: none;
+}
+.dd-selected {
+    padding: 5px 5px 0px 5px;
+    height: 60px;
+    color: #2B2B2B;
+}
+.dd-options { 
+    height: 382px;
+}
+.dd-selected-text {
+    margin-left: 10px;
+}
+/*LOGOS*/
+.dd-selected-image {
+    height: 50px;
+}
+/*
 .select_style {
     background: #FFF;
     overflow: hidden;
@@ -77,6 +96,7 @@ hr {
     cursor:pointer;
     padding:7px 10px;
 }
+*/
 
 /*
 .teamroster {
@@ -191,6 +211,7 @@ hr {
 }
 
 /*LOGOS*/
+/*
 img{
     position: relative;
     margin: 0px 250px;
@@ -206,4 +227,4 @@ img{
 .logo {
     margin-top: 25px;
     margin-bottom: 25px;
-}
+}*/

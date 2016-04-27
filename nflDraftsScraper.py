@@ -175,9 +175,6 @@ for url2 in urlListDrafts:
         tbody = table.find("tbody")
         #object that tells me which team, what year,
         #how many players were picked that year
-        # header = {}
-        # draftsJson.append(header)
-        #how to improve this iteration?
         i = 0 #which column in the row is selected
 
         playerList=[]
@@ -188,7 +185,7 @@ for url2 in urlListDrafts:
                 player = {}
                 title = table.find("tr", {'class':'thd1'})
                 player['year'] = title.find("td").contents[0][:4]
-                player['team'] = title.find("td").contents[0][7:]
+                player['team'] = soup2.find('option',selected=True).getText();
                 player['status'] = 'N/A'
                 draftsJson.append(player)
 
@@ -200,8 +197,6 @@ for url2 in urlListDrafts:
                 0: school
             }
             swithcer[i%5] (player, row)
-
-        # header['numPlayers'] = i/5
 
 # with open('NFL_drafts_14-05.json',  'w') as outfile:
 #     json.dump(draftsJson, outfile, ensure_ascii=False, indent=4)

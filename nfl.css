@@ -1,11 +1,16 @@
 /*GENERAL WRAP-UPS*/
+
 body {
     background-color: #F6F6F6;
+    background: #2B2B2B;
+    color: wheat;
+    font-family: "Helvetica Neue", Helvetica;
 }
 #header {
-    margin-bottom: 50px;
+    margin-bottom: 20px; */
     font-family: sans-serif;
-    color: #2B2B2B;
+    color: #F6F6F6;
+}
 }
 hr {
     border-color:#DE1B1B;
@@ -19,17 +24,18 @@ hr {
 /*SVG*/
 .left-align{
     float:left;    
-    width: 50%;
+    width: 49%;
     overflow: auto;
+    border-right: 1px solid #4F4F4F;
+    border-left: 1px solid #4F4F4F;
 }
 .scrollBox {
     width: 100%;
     overflow: auto;
     cursor: default; 
 }
-svg {
-    background-color: #2B2B2B;
-}
+
+/*CIRCLES*/
 
 /*SELECT OPTION*/
 .select_style {
@@ -49,6 +55,7 @@ svg {
     position: relative;
     cursor: pointer;
     padding-right:20px;
+    margin:5px 20px ;
 }
 .select_style span {
     position: absolute;
@@ -109,10 +116,16 @@ svg {
     font-family: sans-serif;
     font-weight: bold;
 }
-
-.positionLabel {
+.xAxis {
+    font-size: 20px;
+    font-family: sans-serif;
     font-weight: bold;
+    fill: aliceblue;
+}
+.positionLabel {
     border: none;
+    fill: black;
+    font-size: 12px;
 }
 .domain {
     display: none;
@@ -127,5 +140,70 @@ svg {
 /*    display:none;*/
     color:#fff;
     box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
+    opacity:0.9
 }
 
+/*STATUS COLORS*/
+.gone{
+     fill: #FF3838; 
+    stroke: #FF5757;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+
+.act {
+    fill: lightgreen;
+    stroke: #C1EFC1;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.sus {
+    fill: black;
+    stroke: #f9f9f9;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.udf {
+    fill: grey;
+    stroke: #b9b9b9;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+.other_team {
+    fill: #536FF1;
+    stroke: #8B8BFE;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.other {
+    fill: gold;
+    stroke: yellow;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+
+#legend{
+    float: right;
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    fill: white;
+}
+
+/*LOGOS*/
+img{
+    position: relative;
+    margin: 0px 250px;
+    opacity: 0.9;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    padding: 13px;
+    background: #414141;
+}
+
+    
+.logo {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
