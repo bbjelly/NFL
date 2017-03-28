@@ -1,7 +1,7 @@
 var widthScreen = '100%'
 var heightScreen = '100%'
 var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 540 - margin.left - margin.right,
+    width = 710 - margin.left - margin.right,
     height = 700 - margin.top - margin.bottom;
 var drafts, mouseClickDrafts1, mouseClickDrafts2;
 var clickedDict = {"gone": false, "act": false, "sus": false, "udf": false, "other_team": false, "other": false}
@@ -23,6 +23,15 @@ var initYears = function (data, ddData) {
     })
     return filteredD;
 }
+
+var filterByTeamName = function(data, teamName) {
+    
+    var dataFilteredByTeam = data.filter(function(d) {
+        return d.team ==teamName
+    })
+    return dataFilteredByTeam;
+}
+// Filter by names of players in drafts
 var initMouseClickDraft = function(data, draft) {
     var filteredD = data.filter(function(d) {
         var isName = false;
@@ -67,93 +76,89 @@ d3.json('combinedRosterDraft.json', function(data) {
         });
     }
 
-     var svg = d3.select("#svg1Holder")
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("width", width)
-    .append("svg")
-        .attr("class", "firstSvg")
-        .attr("width", width)//width + margin.left + margin.right)
+     var svgHolder = d3.select("body").append("div")
+        .attr("id", "SvgHolder")
         .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("class", "circleGroup")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-
-    var svg2 = d3.select("#svg2Holder")
         .attr("width", width)
-        .attr("style", "flex:1")
-        .append("svg")
-       .attr("class", "secondSvg")
-        .attr("width", width)//width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("class", "circleGroup2")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-    // div for player profile display
-    d3.select("#canvas").append("div")
-        .attr("id", "clickProf1")
+    
+     for (var i = 0; i < Object.keys(selectOptions).length; i++) {
+         var teamName = Object.keys(selectOptions)[i]
+         var svg = svgHolder.append("svg")
+                .attr("class", "Svg" + i)
+                .attr("width", width/4)//width + margin.left + margin.right)
+                .attr("height", (height + margin.top + margin.bottom)/4)
+                .append("g")
+                .attr("class", "circleGroup")
+                .attr("transform",
+                  "translate(" + margin.left + "," + margin.top + ")");
+         displayChart(data, teamName, svg)
+     }
+    
+    
 
-    d3.select("#canvas2").append("div")
-        .attr("id", "clickProf2")
-    var ddData1;
-
-    // TODO: make a function for comboboxes
-    $("#teamNames").ddslick(
-    {
-        onSelected: function(ddData)
-        {
-            ddData1=ddData;
-            d3.selectAll(".circleGroup > *").remove();
-            drafts = initYears(data, ddData)
-            createChart(drafts,svg)
-            d3.selectAll("#clickProf1 > *").remove();
-            initJson(drafts, "first", svg, 1);
-            for (i = 0; i < Object.keys(clickedDict).length; i++) {
-                var key = Object.keys(clickedDict)[i];
-                if (clickedDict[key] == true) {
-                    d3.selectAll("."+key).each(function(d, i) {
-                        d3.select(this).style("fill", function(d) {
-                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
-                        });
-                    })
-                    clickedDict[key]=false;
-                }
-            }
-
-        },
-        background: "#676767"
-    });
-    $("#teamNames2").val("Atlanta")
-    $("#teamNames2").ddslick(
-    {
-        onSelected: function(ddData)
-        {
-            d3.selectAll(".circleGroup2 > *").remove();
-            drafts2 = initYears(data, ddData)
-            createChart(drafts2,svg2)
-            initJson(drafts2, "second", svg2, 2);
-            d3.selectAll("#clickProf2 > *").remove();
-            for (i = 0; i < Object.keys(clickedDict).length; i++) {
-                var key = Object.keys(clickedDict)[i];
-                if (clickedDict[key] == true) {
-                    d3.selectAll("."+key).each(function(d, i) {
-                        d3.select(this).style("fill", function(d) {
-                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
-                        });
-                    })
-                    clickedDict[key]=false;
-                }
-            }
-
-        },
-        background: "#fff"
-    });
+//    var ddData1;
+//
+//    // TODO: make a function for comboboxes
+//    $("#teamNames").ddslick(
+//    {
+//        onSelected: function(ddData)
+//        {
+//            ddData1=ddData;
+//            d3.selectAll(".circleGroup > *").remove();
+//            drafts = initYears(data, ddData)
+//            createChart(drafts,svg)
+//            d3.selectAll("#clickProf1 > *").remove();
+//            initJson(drafts, "first", svg, 1);
+//            for (i = 0; i < Object.keys(clickedDict).length; i++) {
+//                var key = Object.keys(clickedDict)[i];
+//                if (clickedDict[key] == true) {
+//                    d3.selectAll("."+key).each(function(d, i) {
+//                        d3.select(this).style("fill", function(d) {
+//                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
+//                        });
+//                    })
+//                    clickedDict[key]=false;
+//                }
+//            }
+//
+//        },
+//        background: "#676767"
+//    });
+//    $("#teamNames2").val("Atlanta")
+//    $("#teamNames2").ddslick(
+//    {
+//        onSelected: function(ddData)
+//        {
+//            d3.selectAll(".circleGroup2 > *").remove();
+//            drafts2 = initYears(data, ddData)
+//            createChart(drafts2,svg2)
+//            initJson(drafts2, "second", svg2, 2);
+//            d3.selectAll("#clickProf2 > *").remove();
+//            for (i = 0; i < Object.keys(clickedDict).length; i++) {
+//                var key = Object.keys(clickedDict)[i];
+//                if (clickedDict[key] == true) {
+//                    d3.selectAll("."+key).each(function(d, i) {
+//                        d3.select(this).style("fill", function(d) {
+//                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
+//                        });
+//                    })
+//                    clickedDict[key]=false;
+//                }
+//            }
+//
+//        },
+//        background: "#fff"
+//    });
     createLegend()
 
 
 });
 
+// For displaying all of the charts for all of the teams
+function displayChart(data, teamName, svg) {
+    draftsFilteredByTeamName = filterByTeamName(data, teamName)
+    createChart(draftsFilteredByTeamName, svg)
+}
 //MODIFY
 function createChart(drafts,svg) {
     drafts.sort(function(a,b) {
@@ -161,7 +166,7 @@ function createChart(drafts,svg) {
     });
     var positionsObject={}
     var objectLength=[];
-    var radius = 10;
+    var radius = 5;
      drafts.forEach(function(d) {
         d.year =+ d.year
         positionsObject[d.year]=0
@@ -455,7 +460,7 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         d3.select(draft.prevCircle).style("stroke-width", "2px")
                     
                     }
-                    size = parseInt(window.innerWidth) * 0.15
+                    size = parseInt(window.innerWidth) * 0.2
                     draft.active = d;
                     d3.selectAll(clickProf+" > *").remove();
                     d3.select(clickProf).append("table").append("caption")

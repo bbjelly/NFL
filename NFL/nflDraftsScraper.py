@@ -4,7 +4,6 @@ except ImportError:
     import urllib2
 import json
 from bs4 import BeautifulSoup
-import pdb
 #functions for switcher
 #i%5==1 D
 def roundNum(player, row):
@@ -148,7 +147,6 @@ for url2 in urlListDrafts:
     soup2 = BeautifulSoup(page2, "html.parser")
     for table in soup2.findAll("table") [0:10]:#2014-2005
         tbody = table.find("tbody")
-        pdb.set_trace()
         #object that tells me which team, what year,
         #how many players were picked that year
         i = 0 #which column in the row is selected
@@ -165,27 +163,29 @@ for url2 in urlListDrafts:
                 player['status'] = 'N/A'
                 draftsJson.append(player)
 
-            switcher = {
+            swithcer = {
                 1: roundNum,
                 2: selNum,
                 3: name,
                 4: position,
                 0: school
             }
-            switcher[i%5] (player, row)
+            swithcer[i%5] (player, row)
 
-for urlR in urlListRoster:
-    pageR = urllib2.urlopen(urlR).read()
-    soupR = BeautifulSoup(pageR, "html.parser")
-    rosterJsonAddAll(soupR, rosterJson, urlR, draftsJson)
-    if (soupR.findAll('a', {'title':'Go to page 2'}) != None):
-        urlR = "http://www.nfl.com/players/search?category=team&playerType=current&d-447263-p=2&filter=" + urlR[-4:]
-        pageR = urllib2.urlopen(urlR).read()
-        soupR = BeautifulSoup(pageR, "html.parser")
-        rosterJsonAddAll(soupR, rosterJson, urlR, draftsJson)
+# for urlR in urlListRoster:
+#     pageR = urllib2.urlopen(urlR).read()
+#     soupR = BeautifulSoup(pageR, "html.parser")
+#     rosterJsonAddAll(soupR, rosterJson, urlR, draftsJson)
+#     if (soupR.findAll('a', {'title':'Go to page 2'}) != None):
+#         urlR = "http://www.nfl.com/players/search?category=team&playerType=current&d-447263-p=2&filter=" + urlR[-4:]
+#         pageR = urllib2.urlopen(urlR).read()
+#         soupR = BeautifulSoup(pageR, "html.parser")
+#         rosterJsonAddAll(soupR, rosterJson, urlR, draftsJson)
 
-with open('combinedRosterDraft.json', 'w') as outfile:
-    json.dump(draftsJson, outfile, ensure_ascii=False, indent=4)
+# with open('combinedRosterDraft.json', 'w') as outfile:
+#     json.dump(draftsJson, outfile, ensure_ascii=False, indent=4)
 #FOR other scraper
 with open('playerprof.json', 'w') as outfile:
     json.dump(urlProfile, outfile, ensure_ascii=False, indent=4);
+
+

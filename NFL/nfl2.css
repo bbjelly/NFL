@@ -1,13 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Rubik');
-
 /*GENERAL WRAP-UPS*/
 
 body {
     background-color: #F6F6F6;
     background: #2B2B2B;
     color: wheat;
-/*    font-family: "Helvetica Neue", Helvetica;*/
-    font-family: 'Rubik';
+    font-family: "Helvetica Neue", Helvetica;
 }
 #header {
     margin-bottom: 20px; */
@@ -56,10 +53,6 @@ hr {
 .teamroster {
     border: none;
 }
-
-.dd-select {
-    background: #676767
-}
 .dd-selected {
     padding: 5px 5px 0px 5px;
     height: 60px;
@@ -96,73 +89,73 @@ hr {
     display: none;
 }
 .yAxis {
-    font-size: 20px;
+    font-size: 10px;
     font-family: sans-serif;
-/*    font-weight: bold;*/
+    font-weight: bold;
 }
 .xAxis {
-    font-size: 20px;
+    font-size: 10px;
     font-family: sans-serif;
-/*    font-weight: bold;*/
+    font-weight: bold;
     fill: aliceblue;
 }
 .positionLabel {
     border: none;
     fill: black;
-    font-size: 10px;
+    font-size: 12px;
 }
 .domain {
     display: none;
 }
 
-/*PREVIEW or Tooltip*/
+/*PREVIEW*/
 .previewWrap {
     position:absolute;
-    border:3px solid #fff;
+    border:3px solid #ccc;
     background:#333;
     padding:5px;
 /*    display:none;*/
     color:#fff;
-/*    box-shadow: 4px 1px 3px rgba(103, 115, 130, 1);*/
-    opacity:0.5
+    box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
+    opacity:0.9
 }
 
-/*CIRCLES ACCORDING TO THEIR STATUS CLASS*/
+/*STATUS COLORS*/
 .gone{
      fill: #FF3838; 
-/*    stroke: #FF5757;*/
-    opacity: 0.6;
+    stroke: #FF5757;
+    opacity: 0.8;
     stroke-width: 2px;
 }
 
 .act {
     fill: lightgreen;
-/*    stroke: #C1EFC1;*/
-    opacity: 0.6;
+    stroke: #C1EFC1;
+    opacity: 0.8;
     stroke-width: 2px;
 } 
 .sus {
     fill: #D7D6D6;
-/*    stroke: #f9f9f9;*/
-    opacity: 0.6;
+    stroke: #f9f9f9;
+    opacity: 0.8;
     stroke-width: 2px;
 } 
 .udf {
     fill: grey;
-/*    stroke: #b9b9b9;*/
-    opacity: 0.6;
+    stroke: #b9b9b9;
+    opacity: 0.8;
     stroke-width: 2px;
 }
 .other_team {
     fill: #A2AFEF;
-/*    stroke: #D3D3FE;*/
-    opacity: 0.6;
+    stroke: #D3D3FE;
+    opacity: 0.8;
     stroke-width: 2px;
 } 
 .other {
     fill: gold;
-/*    stroke: yellow;*/
-    opacity: 0.6;
+    stroke: yellow;
+    opacity: 0.8;
     stroke-width: 2px;
 }
 
@@ -177,8 +170,8 @@ hr {
 /*CLICK PROFILE*/
 /*TABLE*/
 table {
-    width:15em;
-    height: 600px;
+    width:22em;
+    height: 700px;
     line-height: 1.2em;
 }
 
@@ -196,7 +189,7 @@ table {
 .nameCap {
     line-height: initial;
     font-size: 125%;
-/*    font-weight: bold;*/
+    font-weight: bold;
     padding: 0.2em;
 }
 
