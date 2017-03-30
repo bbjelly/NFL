@@ -121,8 +121,7 @@ d3.json('combinedRosterDraft.json', function(data) {
                 }
             }
 
-        },
-        background: "#676767"
+        }
     });
     $("#teamNames2").val("Atlanta")
     $("#teamNames2").ddslick(
@@ -146,8 +145,7 @@ d3.json('combinedRosterDraft.json', function(data) {
                 }
             }
 
-        },
-        background: "#fff"
+        }
     });
     createLegend()
 
@@ -372,7 +370,7 @@ drafts.forEach(function(d) {
     var arr = [1,2,3,4,5,6,7];
     var xTicks = svg.append("g")
         .attr("class", "xAxis")
-        .attr("transform", "translate(-5,-25)")
+        .attr("transform", "translate(-10,-25)")
     for (var i = 0; i < arr.length; i++) {
         xTicks.append("text")
             .text('R' + arr[i])

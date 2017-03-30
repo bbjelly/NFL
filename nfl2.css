@@ -57,13 +57,19 @@ hr {
     border: none;
 }
 
-.dd-select {
-    background: #676767
+/*DDSLICK Dropdown*/
+/*DDSLICK images*/
+.dd-option-image, .dd-selected-image {
+    width: auto;
+    height: 30px;
+    float: none;
+    margin-bottom: 12px;
 }
 .dd-selected {
     padding: 5px 5px 0px 5px;
-    height: 60px;
-    color: #2B2B2B;
+    height: 50px;
+    background: #c9c9c9;
+    color: #2b2b2b;
 }
 .dd-options { 
     height: 382px;
@@ -72,9 +78,6 @@ hr {
     margin-left: 10px;
 }
 /*LOGOS*/
-.dd-selected-image {
-    height: 50px;
-}
 .select_style {
     display: inline-block;
     width: 49%;
@@ -118,13 +121,15 @@ hr {
 /*PREVIEW or Tooltip*/
 .previewWrap {
     position:absolute;
-    border:3px solid #fff;
+    border:2px solid #fff;
     background:#333;
     padding:5px;
 /*    display:none;*/
     color:#fff;
 /*    box-shadow: 4px 1px 3px rgba(103, 115, 130, 1);*/
-    opacity:0.5
+    opacity:0.7;
+    border-radius: 25px;
+    font-size: 12px;
 }
 
 /*CIRCLES ACCORDING TO THEIR STATUS CLASS*/
