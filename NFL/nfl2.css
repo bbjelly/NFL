@@ -193,4 +193,24 @@ table {
     padding: 0.2em;
 }
 
+/*
+span{
+        font-size: 10px;
+    display: -webkit-box;
+}
+*/
+
+span{
+        font-size: 10px;
+}
+
+svg{
+        margin-left: -10px;
+    
+}
+
+    
+}
+
+
 /*LOGOS*/

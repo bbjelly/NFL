@@ -1,8 +1,8 @@
 var widthScreen = '100%'
 var heightScreen = '100%'
-var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 710 - margin.left - margin.right,
-    height = 700 - margin.top - margin.bottom;
+var margin = {top: 5, right: 5, bottom: 5, left: 0},
+    width = 80 - margin.left - margin.right,
+    height = 90 - margin.top - margin.bottom;
 var drafts, mouseClickDrafts1, mouseClickDrafts2;
 var clickedDict = {"gone": false, "act": false, "sus": false, "udf": false, "other_team": false, "other": false}
 
@@ -80,13 +80,17 @@ d3.json('combinedRosterDraft.json', function(data) {
         .attr("id", "SvgHolder")
         .attr("height", height + margin.top + margin.bottom)
         .attr("width", width)
+       .style("margin-left", "50px")
     
      for (var i = 0; i < Object.keys(selectOptions).length; i++) {
          var teamName = Object.keys(selectOptions)[i]
+          svgHolder.append("span")
+              .html(teamName)
+     
          var svg = svgHolder.append("svg")
                 .attr("class", "Svg" + i)
-                .attr("width", width/4)//width + margin.left + margin.right)
-                .attr("height", (height + margin.top + margin.bottom)/4)
+                .attr("width", width)//width + margin.left + margin.right)
+                .attr("height", (height + margin.top + margin.bottom))
                 .append("g")
                 .attr("class", "circleGroup")
                 .attr("transform",
@@ -157,16 +161,20 @@ d3.json('combinedRosterDraft.json', function(data) {
 // For displaying all of the charts for all of the teams
 function displayChart(data, teamName, svg) {
     draftsFilteredByTeamName = filterByTeamName(data, teamName)
+   
     createChart(draftsFilteredByTeamName, svg)
 }
 //MODIFY
 function createChart(drafts,svg) {
+    
+    
+    
     drafts.sort(function(a,b) {
         return d3.descending(a.year, b.year) || d3.ascending(a.round, b.round);
     });
     var positionsObject={}
     var objectLength=[];
-    var radius = 5;
+    var radius = 2;
      drafts.forEach(function(d) {
         d.year =+ d.year
         positionsObject[d.year]=0
@@ -300,6 +308,7 @@ drafts.forEach(function(d) {
     .enter()
     .append("g")
         .attr("class", "circleWrap")
+        
     
     prev_round = 0;
     prev_year = 2016;
@@ -325,18 +334,18 @@ drafts.forEach(function(d) {
     prev_round = 0;
     prev_year = 2016;
     draftPicks = 0;
-    circleGroup.append("text")
-        .attr("class", "positionLabel")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-        return d.position;
-        })
-        .attr("x", function(d,i) {
-             return position(d)
-         })
-        .attr("y", function(d) {
-            return yPosition(d)+5;
-         }) 
+//    circleGroup.append("text")
+//        .attr("class", "positionLabel")
+//        .attr("text-anchor", "middle")
+//        .text(function(d) {
+//        return d.position;
+//        })
+//        .attr("x", function(d,i) {
+//             return position(d)
+//         })
+//        .attr("y", function(d) {
+//            return yPosition(d)+5;
+//         }) 
 
     //hover preview
 //    svg.selectAll("g > *")
@@ -348,13 +357,13 @@ drafts.forEach(function(d) {
                 .attr("class", "previewWrap")
                 .attr("width", "200px")
             divText
-                .append("p")
+                .append("div")
                 .text("Name: " + d.name);
             divText
-                .append("p")
+                .append("div")
                 .text("School: " + d.school)
             divText
-                .append("p")
+                .append("div")
                 .text("Round: " + d.round)
         })
         .on("mousemove", function() {
@@ -400,6 +409,7 @@ function createLegend(){
         .attr("height", "75px")
     var legend = svgOrig.append("g")
         .attr("class", "legend")
+    .attr("transform","translate(40,5)")
     var count = 0;
     for (var i in legendKey.class) {
         keys = Object.keys(legendKey.class);

@@ -341,14 +341,14 @@ drafts.forEach(function(d) {
                 .attr("class", "previewWrap")
                 .attr("width", "200px")
             divText
-                .append("p")
-                .text("Name: " + d.name);
+                .append("div")
+                .html("Name: <strong>" + d.name+"</strong>");
             divText
-                .append("p")
-                .text("School: " + d.school)
+                .append("div")
+                .html("School:<strong> " + d.school+"</strong>")
             divText
-                .append("p")
-                .text("Round: " + d.round)
+                .append("div")
+                .html("Round: <strong>" + d.round+"</strong>")
         })
         .on("mousemove", function() {
             d3.select(this).style("opacity", 1)
