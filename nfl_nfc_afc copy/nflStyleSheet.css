@@ -1,0 +1,219 @@
+/*GENERAL WRAP-UPS*/
+
+body {
+    background-color: #F6F6F6;
+    background: #2B2B2B;
+    color: wheat;
+    font-family: "Helvetica Neue", Helvetica;
+}
+#header {
+    margin-bottom: 20px; */
+    font-family: sans-serif;
+    color: #F6F6F6;
+}
+}
+hr {
+    border-color:#DE1B1B;
+    border-width: 3px;
+/*
+    border: 0;
+    height: 0;  Firefox... 
+    box-shadow: 0 0 10px 1px black;
+*/
+}
+/*SVG*/
+.left-align{
+    float:left;    
+    width: 49%;
+    overflow: auto;
+    border-right: 1px solid #4F4F4F;
+    border-left: 1px solid #4F4F4F;
+}
+.scrollBox {
+    width: 100%;
+    overflow: auto;
+    cursor: default; 
+}
+
+#canvas {
+    display: flex;
+}
+#canvas2 {
+    display: flex;
+}
+.firstSvg, .secondSvg {
+    flex: 0 0 65%;
+}
+#clickProf, #clickProf2 {
+    flex: 1;
+}
+/*CIRCLES*/
+
+/*SELECT OPTION*/
+.teamroster {
+    border: none;
+}
+.dd-selected {
+    padding: 5px 5px 0px 5px;
+    height: 60px;
+    color: #2B2B2B;
+}
+.dd-options { 
+    height: 382px;
+}
+.dd-selected-text {
+    margin-left: 10px;
+}
+/*LOGOS*/
+.dd-selected-image {
+    height: 50px;
+}
+.select_style {
+    display: inline-block;
+    width: 49%;
+}
+
+#teamNames:hover {
+/*
+    background-color: aliceblue;
+    color: blue;
+    opacity: .8;
+*/
+}
+#teamNames option {
+/*    background: aliceblue;*/
+}
+
+/*GRAPH LABELS*/
+.domain {
+    display: none;
+}
+.yAxis {
+    font-size: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+.xAxis {
+    font-size: 10px;
+    font-family: sans-serif;
+    font-weight: bold;
+    fill: aliceblue;
+}
+.positionLabel {
+    border: none;
+    fill: black;
+    font-size: 12px;
+}
+.domain {
+    display: none;
+}
+
+/*PREVIEW*/
+text {
+    pointer-events: none;
+}
+.previewWrap {
+    position:absolute;
+    border:3px solid #ccc;
+    background:#333;
+    padding:5px;
+/*    display:none;*/
+    color:#fff;
+    box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
+    opacity:0.9
+}
+
+/*STATUS COLORS*/
+.gone{
+     fill: #FF3838; 
+    stroke: #FF5757;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+
+.act {
+    fill: lightgreen;
+    stroke: #C1EFC1;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.sus {
+    fill: #D7D6D6;
+    stroke: #f9f9f9;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.udf {
+    fill: grey;
+    stroke: #b9b9b9;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+.other_team {
+    fill: #A2AFEF;
+    stroke: #D3D3FE;
+    opacity: 0.8;
+    stroke-width: 2px;
+} 
+.other {
+    fill: gold;
+    stroke: yellow;
+    opacity: 0.8;
+    stroke-width: 2px;
+}
+
+#legend{
+    float: right;
+    position: absolute;
+    right: 35px;
+    top: 15px;
+    fill: white;
+}
+
+/*CLICK PROFILE*/
+/*TABLE*/
+table {
+    width:22em;
+    height: 700px;
+    line-height: 1.2em;
+}
+
+.heading {
+    text-align: center;
+    background: #97233F;
+    color: white;
+    line-height: 1.5em;
+}
+
+.infoHeading {
+    text-align: right;
+    width: 40%;
+}
+.nameCap {
+    line-height: initial;
+    font-size: 125%;
+    font-weight: bold;
+    padding: 0.2em;
+}
+
+/*
+span{
+        font-size: 10px;
+    display: -webkit-box;
+}
+*/
+
+span{
+    font-size: 10px;
+}
+
+svg{
+    margin-left: -10px;
+
+}
+
+    
+}
+
+
+/*LOGOS*/

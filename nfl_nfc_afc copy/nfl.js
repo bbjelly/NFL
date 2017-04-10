@@ -1,9 +1,9 @@
 var widthScreen = '100%'
 var heightScreen = '100%'
-var margin = {top: 50, right: 20, bottom: 30, left: 70},
-    width = 540 - margin.left - margin.right,
-    height = 700 - margin.top - margin.bottom;
-var drafts, mouseClickDrafts1, mouseClickDrafts2;
+var margin = {top: 5, right: 5, bottom: 5, left: 0}/*,
+    width = 80 - margin.left - margin.right,
+    height = 90 - margin.top - margin.bottom;*/
+var draftsFilteredByTeamName, mouseClickDrafts1, mouseClickDrafts2;
 var clickedDict = {"gone": false, "act": false, "sus": false, "udf": false, "other_team": false, "other": false}
 
 var mcDraftsWrap = {first: mouseClickDrafts1, second: mouseClickDrafts2}
@@ -12,6 +12,12 @@ var years, teams
 var legendKey = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {"N/A": "gone", "ACT": "act", "OTHER_TEAM": "other_team", "SUS": "sus", "UDF": "udf", "other": "other"},
                text: {"N/A": ["Not Active", 120], "ACT": ["Active", 107], "OTHER_TEAM": ["Other Team", 93], "SUS": ["Suspended", 101], "UDF": ["Unsigned Draft Pick", 106], "other": ["Other",120]} }
+
+NFC_AFC_DIVISIONS = {'New Orleans Saints': 'NFC', 'Pittsburgh Steelers': 'AFC', 'New England Patriots': 'AFC', 'Tampa Bay Buccaneers': 'NFC', 'Philadelphia Eagles': 'NFC', 'Atlanta Falcons': 'NFC', 'Cleveland Browns': 'AFC', 'Cincinnati Bengals': 'AFC', 'Los Angeles Chargers': 'AFC', 'Oakland Raiders': 'AFC', 'Buffalo Bills': 'AFC', 'New York Giants': 'NFC', 'Detroit Lions': 'NFC', 'Los Angeles Rams': 'NFC', 'Carolina Panthers': 'NFC', 'San Francisco 49ers': 'NFC', 'Indianapolis Colts': 'AFC', 'Seattle Seahawks': 'NFC', 'Arizona Cardinals': 'NFC', 'Houston Texans': 'AFC', 'Tennessee Titans': 'AFC', 'Jacksonville Jaguars': 'AFC', 'Chicago Bears': 'NFC', 'Washington Redskins': 'NFC', 'Miami Dolphins': 'AFC', 'New York Jets': 'AFC', 'Baltimore Ravens': 'AFC', 'Kansas City Chiefs': 'AFC', 'Denver Broncos': 'AFC', 'Green Bay Packers': 'NFC', 'Minnesota Vikings': 'NFC', 'Dallas Cowboys': 'NFC'}
+
+// STATIC FINAL VAR
+var YLOC_SCALE = 1.4
+var CIRCLE_GAP_FACTOR = 1.6 // To have same gap between rounds
 
 
 var initYears = function (data, ddData) {
@@ -22,6 +28,15 @@ var initYears = function (data, ddData) {
     })
     return filteredD;
 }
+
+var filterByTeamName = function(data, teamName) {
+    
+    var dataFilteredByTeam = data.filter(function(d) {
+        return d.team ==teamName
+    })
+    return dataFilteredByTeam;
+}
+// Filter by names of players in drafts
 var initMouseClickDraft = function(data, draft) {
     var filteredD = data.filter(function(d) {
         var isName = false;
@@ -45,121 +60,83 @@ var initJson = function (draft, keyMC, svg, identifier) {
 }
 
 d3.json('combinedRosterDraft.json', function(data) {
+    
     //
     var selectOptions={}
+    var teamNames = {}
     for (var i in data){
-        selectOptions[data[i].team]=1;
+        selectOptions[data[i].teamAbbr]=1;
+        teamNames[data[i].teamAbbr] = data[i].team
     };
     //make a selection bar by getting the team name from the data
-    for (var i in selectOptions){
+    for (var iAbbr in selectOptions){
         $(".teamroster").each(function(){
-            var splitNames = i.split(" ");
-            var optionVal = splitNames[0];
-            if (splitNames[0] == "New" || splitNames[0] == "San") {
-                if (splitNames[1] == "York") {
-                    optionVal= splitNames[2];
-                } else {
-                    optionVal= splitNames[1];
-                }
-            }
-            $(this).append("<option value=" + optionVal + " data-imagesrc='images/" +i+".png'>"+i+"</option>");
+            var optionVal = iAbbr;
+            $(this).append("<option value=" + optionVal + " data-imagesrc='images/" +teamNames[optionVal]+".png'>"+teamNames[optionVal]+"</option>");
         });
     }
-
-     var svg = d3.select("#svg1Holder")
-    .attr("height", height + margin.top + margin.bottom)
-    .attr("width", width)
-    .append("svg")
-        .attr("class", "firstSvg")
-        .attr("width", width)//width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("class", "circleGroup")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-
-    var svg2 = d3.select("#svg2Holder")
-        .attr("width", width)
-        .attr("style", "flex:1")
-        .append("svg")
-       .attr("class", "secondSvg")
-        .attr("width", width)//width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("class", "circleGroup2")
-        .attr("transform",
-              "translate(" + margin.left + "," + margin.top + ")");
-    // div for player profile display
-    d3.select("#canvas").append("div")
-        .attr("id", "clickProf1")
-
-    d3.select("#canvas2").append("div")
-        .attr("id", "clickProf2")
-    var ddData1;
-
-    // TODO: make a function for comboboxes
-    $("#teamNames").ddslick(
-    {
-        onSelected: function(ddData)
-        {
-            ddData1=ddData;
-            d3.selectAll(".circleGroup > *").remove();
-            drafts = initYears(data, ddData)
-            createChart(drafts,svg)
-            d3.selectAll("#clickProf1 > *").remove();
-            initJson(drafts, "first", svg, 1);
-            for (i = 0; i < Object.keys(clickedDict).length; i++) {
-                var key = Object.keys(clickedDict)[i];
-                if (clickedDict[key] == true) {
-                    d3.selectAll("."+key).each(function(d, i) {
-                        d3.select(this).style("fill", function(d) {
-                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
-                        });
-                    })
-                    clickedDict[key]=false;
-                }
-            }
-
+    
+    
+    var selectedSizes = {"width": 540 - margin.left - margin.right, "height": 700 - margin.top - margin.bottom, radius: 10}
+    var svgHolder = d3.select(".content").append("div")
+        .attr("id", "SvgHolder")
+        .attr("height", selectedSizes.height + margin.top + margin.bottom)
+        .attr("width", selectedSizes.width)
+        .style("margin-left", "50px")
+    var svg = createSvg(svgHolder, "selectedSvg", selectedSizes.width, selectedSizes.height)
+    var afcSvgHolder = d3.select("#AFC")
+    var nfcSvgHolder = d3.select("#NFC")
+    var previewSizes = {"width": 80 - margin.left - margin.right, "height": 90 - margin.top - margin.bottom, radius: 2}
+    for (var i = 0; i < Object.keys(selectOptions).length; i++) {
+        var teamName = teamNames[Object.keys(selectOptions)[i]]
+//          svgHolder.append("span")
+//              .html(teamName)
+        var previewSvg
+        if (NFC_AFC_DIVISIONS[teamName] === "AFC") {
+            previewSvg = createSvg(afcSvgHolder, "Svg" + i, previewSizes.width, previewSizes.height)
+        } else {
+            previewSvg = createSvg(nfcSvgHolder, "Svg" + i, previewSizes.width, previewSizes.height)
         }
-    });
-    $("#teamNames2").val("Atlanta")
-    $("#teamNames2").ddslick(
-    {
-        onSelected: function(ddData)
-        {
-            d3.selectAll(".circleGroup2 > *").remove();
-            drafts2 = initYears(data, ddData)
-            createChart(drafts2,svg2)
-            initJson(drafts2, "second", svg2, 2);
-            d3.selectAll("#clickProf2 > *").remove();
-            for (i = 0; i < Object.keys(clickedDict).length; i++) {
-                var key = Object.keys(clickedDict)[i];
-                if (clickedDict[key] == true) {
-                    d3.selectAll("."+key).each(function(d, i) {
-                        d3.select(this).style("fill", function(d) {
-                            return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
-                        });
-                    })
-                    clickedDict[key]=false;
-                }
-            }
-
-        }
-    });
+        onPreviewHover("Svg" + i)
+        previewSvg.on("click", function() {
+            d3.selectAll(".selectedSvg > .circleGroup > *").remove()
+            displayDetailedChart(data, teamName, svg, selectedSizes)
+        })
+        displayPlayerCircles(data, teamName, previewSvg, previewSizes)
+    }
+     
+    displayDetailedChart(data, "Atlanta Falcons", svg, selectedSizes)
     createLegend()
 
 
 });
 
+function displayDetailedChart(data, teamName, svg, selectedSizes) {
+     positionFunctions = displayPlayerCircles(data, teamName, svg, selectedSizes)
+     addXYLabels(svg, selectedSizes.radius)
+     addPositionLabels(svg, selectedSizes)
+     addHoverPreview(svg)
+}
+
+// For displaying all of the charts for all of the teams
+function displayPlayerCircles(data, teamName, svg, sizes) {
+    draftsFilteredByTeamName = filterByTeamName(data, teamName)
+   
+    createChart(svg, sizes)
+//    createChart(draftsFilteredByTeamName, svg, sizes)
+}
 //MODIFY
-function createChart(drafts,svg) {
-    drafts.sort(function(a,b) {
+function createChart(svg, sizes) {
+    width = sizes.width
+    height = sizes.height
+    
+    draftsFilteredByTeamName.sort(function(a,b) {
         return d3.descending(a.year, b.year) || d3.ascending(a.round, b.round);
     });
     var positionsObject={}
     var objectLength=[];
-    var radius = 10;
-     drafts.forEach(function(d) {
+    var radius = sizes.radius;
+     draftsFilteredByTeamName.forEach(function(d) {
         d.year =+ d.year
         positionsObject[d.year]=0
 
@@ -169,12 +146,11 @@ function createChart(drafts,svg) {
             .key(function(d) { return d.year; })
             .key(function(d) { return d.round; })
             .rollup(function(leaves) { return leaves.length; })
-            .entries(drafts)
+            .entries(draftsFilteredByTeamName)
 
     var prev_round = 1; // used to change the start location of the circles depending on the round
     var prev_year = 2016; //one that should be most recent year
     var draftPicks; //to locate circles depending on how many picks per round
-    var fixedSize = 1.6; //to have same gap between rounds
     var posArr = nested_data.filter(function(nd) {
             return nd.key == prev_year;
         })[0].values.filter(function(nd) {
@@ -195,7 +171,7 @@ function createChart(drafts,svg) {
         if (d.round != prev_round) {
             draftPicks = 1;
             while (prev_round != d.round) {
-                var sum = 0;
+                var sumFactor = 0;
                 var limit;
                 if (prev_round === "N/A") {
                     limit = 7;
@@ -203,9 +179,9 @@ function createChart(drafts,svg) {
                     limit = prev_round;
                 }
                 for (var i = 0; i < limit; i++) {
-                    sum += fixedSize;
+                    sumFactor += CIRCLE_GAP_FACTOR;
                 }
-                positionsObject[d.year]=radius * 3 * (sum-1)+radius*1.8;
+                positionsObject[d.year]=radius * 3 * (sumFactor-1)+radius*1.8;
                 prev_round++;
                 if (prev_round > 7) {
                     prev_round = "N/A"
@@ -240,10 +216,9 @@ function createChart(drafts,svg) {
     // Set the ranges
     var x = d3.scale.linear().range([0, width])
     
-    var YLOC_SCALE = 1.4
     var yLoc = d3.scale.linear()
         .range([height/YLOC_SCALE, 0])
-        .domain([d3.min(drafts, function(d) { return d.year; }), d3.max(drafts, function(d) { return d.year; })])
+        .domain([d3.min(draftsFilteredByTeamName, function(d) { return d.year; }), d3.max(draftsFilteredByTeamName, function(d) { return d.year; })])
 
     var yPosition = function(d) {
             if (d.year != prev_year) {
@@ -275,23 +250,19 @@ function createChart(drafts,svg) {
             }
             return yLoc(d.year)
         }
-    var y = d3.time.scale()
-    .range([height/YLOC_SCALE, 0]);
-    var yAxis = d3.svg.axis().scale(y)
-    .orient("left")
-    y.domain([new Date(d3.min(drafts, function(d) { return d.year; }),0,1), new Date(d3.max(drafts, function(d) { return d.year; }),0,1)]);
 
 // Add the scatterplot
     
-drafts.forEach(function(d) {
+    draftsFilteredByTeamName.forEach(function(d) {
         d.year =+ d.year
         positionsObject[d.year]=0
     })
     var circleGroup = svg.selectAll("dot")
-    .data(drafts)
+    .data(draftsFilteredByTeamName)
     .enter()
     .append("g")
         .attr("class", "circleWrap")
+        
     
     prev_round = 0;
     prev_year = 2016;
@@ -310,77 +281,18 @@ drafts.forEach(function(d) {
         .attr("cy", function(d) {
             return yPosition(d);
          })
-    drafts.forEach(function(d) {
+    draftsFilteredByTeamName.forEach(function(d) {
         d.year =+ d.year
         positionsObject[d.year]=0
     })
-    prev_round = 0;
-    prev_year = 2016;
-    draftPicks = 0;
-    circleGroup.append("text")
-        .attr("class", "positionLabel")
-        .attr("text-anchor", "middle")
-        .text(function(d) {
-        return d.position;
-        })
-        .attr("x", function(d,i) {
-             return position(d)
-         })
-        .attr("y", function(d) {
-            return yPosition(d)+5;
-         }) 
 
-    //hover preview
-//    svg.selectAll("g > *")
-    svg.selectAll("g")
-        .on("mouseover", function(d) {
-            d3.select(this).style("opacity", 1)
-            var divText = d3.selectAll("body")
-                .append("div")
-                .attr("class", "previewWrap")
-                .attr("width", "200px")
-            divText
-                .append("div")
-                .html("Name: <strong>" + d.name+"</strong>");
-            divText
-                .append("div")
-                .html("School:<strong> " + d.school+"</strong>")
-            divText
-                .append("div")
-                .html("Round: <strong>" + d.round+"</strong>")
-        })
-        .on("mousemove", function() {
-            d3.select(this).style("opacity", 1)
-            d3.selectAll(".previewWrap")
-                .style("top",(d3.mouse(document.body)[1] + 40) + "px")
-                .style("left",(d3.mouse(document.body)[0] + 20) + "px");
-        })
-        .on("mouseout", function(d) {
-            d3.selectAll(".previewWrap").remove();
-            d3.select(this).style("opacity", .8)
-        })
-    // Add the Y Axis
-    svg.append("g")
-        .attr("class", "yAxis")
-        .call(yAxis)
-        .style("fill", "aliceblue");
-
-    //ADD label for X-axis
-    var arr = [1,2,3,4,5,6,7];
-    var xTicks = svg.append("g")
-        .attr("class", "xAxis")
-        .attr("transform", "translate(-10,-25)")
-    for (var i = 0; i < arr.length; i++) {
-        xTicks.append("text")
-            .text('R' + arr[i])
-            .attr("x", function() {
-                var sum = 0;
-                for (var j = 0; j < i; j++) {
-                    sum += fixedSize;
-                }
-                    return radius * 3 * (sum)+radius+14;
-            })
-    }
+    // For now
+//    var positionFunctions = {"position": position, "yPosition": yPosition}
+//    var positionFunctions = {"position": position, "yPosition": yPosition}
+    sizes["position"] = position
+    sizes["yPosition"] = yPosition
+//    return positionFunctions
+//    return positionFunctions
 }
 
 
@@ -392,6 +304,7 @@ function createLegend(){
         .attr("height", "75px")
     var legend = svgOrig.append("g")
         .attr("class", "legend")
+    .attr("transform","translate(40,5)")
     var count = 0;
     for (var i in legendKey.class) {
         keys = Object.keys(legendKey.class);
@@ -452,7 +365,7 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         d3.select(draft.prevCircle).style("stroke-width", "2px")
                     
                     }
-                    size = parseInt(window.innerWidth) * 0.15
+                    size = parseInt(window.innerWidth) * 0.2
                     draft.active = d;
                     d3.selectAll(clickProf+" > *").remove();
                     d3.select(clickProf).append("table").append("caption")
@@ -616,3 +529,114 @@ function checkUndefinedPlayer(playerInfo) {
     }
     return playerInfo
 }
+
+function createSvg(svgHolder, className, width, height) {
+    var radius = Math.ceil(width * 0.02)
+    return svgHolder.append("svg")
+                .attr("class", className)
+                .attr("width", width)//width + margin.left + margin.right)
+                .attr("height", (height + margin.top + margin.bottom))
+                .append("g")
+                .attr("class", "circleGroup")
+                .attr("transform",
+                  "translate(" + radius * 5 + "," + radius * 5 + ")")
+}
+
+function addHoverPreview(svg) {
+    svg.selectAll("g")
+        .on("mouseover", function(d) {
+            d3.select(this).style("opacity", 1)
+            var divText = d3.selectAll("body")
+                .append("div")
+                .attr("class", "previewWrap")
+                .attr("width", "200px")
+            divText
+                .append("div")
+                .text("Name: " + d.name);
+            divText
+                .append("div")
+                .text("School: " + d.school)
+            divText
+                .append("div")
+                .text("Round: " + d.round)
+        })
+        .on("mousemove", function() {
+            d3.select(this).style("opacity", 1)
+            d3.selectAll(".previewWrap")
+                .style("top",(d3.mouse(document.body)[1] + 40) + "px")
+                .style("left",(d3.mouse(document.body)[0] + 20) + "px");
+        })
+        .on("mouseout", function(d) {
+            d3.selectAll(".previewWrap").remove();
+            d3.select(this).style("opacity", .8)
+        })
+}
+
+function addXYLabels(svg, radius) {
+    // Add the Y Axis
+    var y = d3.time.scale()
+    .range([height/YLOC_SCALE, 0]);
+    var yAxis = d3.svg.axis().scale(y)
+    .orient("left")
+    y.domain([new Date(d3.min(draftsFilteredByTeamName, function(d) { return d.year; }),0,1), new Date(d3.max(draftsFilteredByTeamName, function(d) { return d.year; }),0,1)]);
+    
+    svg.append("g")
+        .attr("class", "yAxis")
+        .call(yAxis)
+        .style("fill", "aliceblue");
+
+    //ADD label for X-axis
+    var arr = [1,2,3,4,5,6,7];
+    var xTicks = svg.append("g")
+        .attr("class", "xAxis")
+        .attr("transform", "translate(-5,-25)")
+    for (var i = 0; i < arr.length; i++) {
+        xTicks.append("text")
+            .text('R' + arr[i])
+            .attr("x", function() {
+                var sumFactor = 0;
+                for (var j = 0; j < i; j++) {
+                    sumFactor += CIRCLE_GAP_FACTOR;
+                }
+                    return radius * 3 * (sumFactor)+radius+14;
+            })
+    }
+}
+
+function addPositionLabels(svg, positionFunctions) {
+
+    prev_round = 0;
+    prev_year = 2016;
+    draftPicks = 0;
+    svg.selectAll("dot")
+        .data(draftsFilteredByTeamName)
+        .enter().append("text")
+       .attr("class", "positionLabel")
+       .attr("text-anchor", "middle")
+       .text(function(d) {
+       return d.position;
+       })
+       .attr("x", function(d,i) {
+            return positionFunctions.position(d)
+        })
+       .attr("y", function(d) {
+           return positionFunctions.yPosition(d)+5;
+        })
+}
+
+function onPreviewHover(svgClass) {
+    svg = d3.select("." + svgClass)
+    svg.on("mouseover", function(d) {
+        d3.select(this).style("opacity", 0.5)
+    })
+    svg.on("mouseout", function(d) {
+        d3.select(this).style("opacity", 1.0)
+    })
+}
+
+//function onPreviewClick(svgClass, svgDisplay, sizes, data, ) {
+//    svgClicked = d3.select("." + svgClass)
+//    svgClicked.on("click", function() {
+//                  displayDetailedChart(data, teamName, svg, selectedSizes)
+//           })
+//}
