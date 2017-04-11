@@ -68,6 +68,5 @@ for url in urlArr:
         player['stats'] = stats;
     profiles.append(player);
 
-with open('playerProfile3.json', 'w', encoding='UTF-8', newline='') as outfile:
+with open('playerProfile1.json', 'w', encoding='UTF-8', newline='') as outfile:
     json.dump(profiles, outfile, ensure_ascii=False, indent=4);
-

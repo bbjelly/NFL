@@ -3,7 +3,7 @@
 body {
     background-color: #F6F6F6;
     background: #2B2B2B;
-    color: wheat;
+    color: #ddd;
     font-family: "Helvetica Neue", Helvetica;
 }
 #header {
@@ -89,12 +89,12 @@ hr {
     display: none;
 }
 .yAxis {
-    font-size: 10px;
+/*    font-size: 10px;*/
     font-family: sans-serif;
     font-weight: bold;
 }
 .xAxis {
-    font-size: 10px;
+/*    font-size: 10px;*/
     font-family: sans-serif;
     font-weight: bold;
     fill: aliceblue;
@@ -117,7 +117,7 @@ text {
     border:3px solid #ccc;
     background:#333;
     padding:5px;
-/*    display:none;*/
+    //display:none;
     color:#fff;
     box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
     opacity:0.9
@@ -165,7 +165,7 @@ text {
 #legend{
     float: right;
     position: absolute;
-    right: 35px;
+    left: 650px;
     top: 15px;
     fill: white;
 }
@@ -204,16 +204,73 @@ span{
 */
 
 span{
-    font-size: 10px;
+   font-size: 10px;
+    position: absolute;
+    margin-left: -60px;
+    margin-top: 75px;
+    width: 65px;
+    overflow: hidden;
+    cursor: default;
+   
+}
+
+/* TEAMS PREVIEW*/
+.team-info{
+    width: 1280px;
+    margin: auto 0;
+    display: flex;
+    position: absolute;
+}
+#NFC {
+    margin-top: 120px;
+}
+.teamDiv {
+    height: 100px;
+}
+
+#selectedBorder {
+    width: 1280px;
+    height: 250px;
+}
+#selectedBorder rect {
+    fill: none;
+    stroke: #fff689;
+}
+
+/* TEAM DETAILED VIEW */
+.selectedSvg{
+/*    margin-left: 2%;*/
+    width: 40%;
+}
+#SvgHolder {
+    display: flex;
+    width: 1280px;
+    margin-left: 5%;
+    position: absolute;
+    margin-top: 210px;
 }
 
 svg{
-    margin-left: -10px;
+    margin-right: -10px;
 
-}
-
-    
 }
 
 
 /*LOGOS*/
+.teamTitle {
+    margin-left: 5%;
+    margin-top: 2%;
+    width: 220px;
+}
+#teamLogo {
+    width: 100px;
+    margin-top: 50px;
+    opacity: .9;
+}
+#teamName {
+    font-size: 25px;
+/*
+    margin-left: 25%;
+    margin-top: -10%;
+*/
+}
