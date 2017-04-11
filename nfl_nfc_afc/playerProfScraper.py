@@ -19,7 +19,7 @@ urlArr = [];
 for urlRest in playerProfile:
     urlArr.append(urlBase+urlRest);
 
-urlArr = urlArr[:500]#[1000:1500]
+urlArr = urlArr[500:1000]#[1000:1500]
 profiles=[];
 keyNames=['hwa', 'birth', 'college', 'exp', 'hs'];
 
@@ -68,5 +68,5 @@ for url in urlArr:
         player['stats'] = stats;
     profiles.append(player);
 
-with open('playerProfile1.json', 'w', encoding='UTF-8', newline='') as outfile:
+with open('playerProfile2.json', 'w') as outfile:
     json.dump(profiles, outfile, ensure_ascii=False, indent=4);

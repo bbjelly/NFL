@@ -125,7 +125,9 @@ d3.json('combinedRosterDraft.json', function(data) {
             .attr("x", 140.2777862548828 - 20) // hardcoded due to asynchronous
             .attr("y", 219.93057250976562 - 98)
    
-    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
+//    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
+    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
+    
     createLegend()
 
 
@@ -188,7 +190,7 @@ function createChart(svg, sizes) {
             return nd.key == prev_round;
         });
 
-    var position=function(d){
+    var position = function(d){
         if (d.year != prev_year) {
             //reset prev_round to 0 at the beginning of new year
             prev_round = 0;
@@ -225,7 +227,7 @@ function createChart(svg, sizes) {
             });
             positionsObject[d.year]+=radius * 3;
             if (posArr[0].values === 1) {
-                positionsObject[d.year] += radius*.85
+                positionsObject[d.year] += radius
             }
         } else {
             draftPicks++;
@@ -236,7 +238,12 @@ function createChart(svg, sizes) {
                     positionsObject[d.year]-=radius*1.8;
                 }
             } else if (posArr[0].values == 5 && draftPicks == 4) {
-                positionsObject[d.year] -=radius*.9;
+                    positionsObject[d.year] -=radius*0.9;
+//                if (draftPicks == 1 || draftPicks == 4) {
+//                    positionsObject[d.year] -=radius*1.5;
+//                } else {
+//                    positionsObject[d.year] +=radius*2.5;
+//                }
             } else {
                 positionsObject[d.year]+=radius*1.8
             }
