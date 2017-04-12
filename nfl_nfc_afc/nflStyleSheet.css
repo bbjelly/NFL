@@ -38,11 +38,13 @@ h1{
 #clickProf {
     flex: 1;
     margin-left: 930px;
+
 }
 
 #clickProf img {
-    height: 150px;
+        height: 150px;
     width: auto;
+    border: 2px solid gray;
 }
 
 /*LOGOS*/
@@ -138,13 +140,15 @@ circle{
 table {
     width: 255px;
     height: 540px;
+    border: 1px solid #6d6d6d;
+    background: #262525;
     /* line-height: 1.2em; */
 }
 
 .heading {
     font-size: 15px;
     text-align: center;
-    background: #97233F;
+        background: #909090;
     color: white;
      line-height: 25px; 
     opacity: 0.9;
