@@ -3,33 +3,37 @@ var heightScreen = '100%';
 var margin = {top: 5, right: 5, bottom: 5, left: 0}/*,
     width = 80 - margin.left - margin.right,
     height = 90 - margin.top - margin.bottom;*/
-var draftsFilteredByTeamName, mouseClickDrafts1, mouseClickDrafts2;
+var draftsFilteredByTeamName, mouseClickDrafts;
 var clickedDict = {"gone": false, "act": false, "sus": false, "udf": false, "other_team": false, "other": false};
-
-var mcDraftsWrap = {first: mouseClickDrafts1, second: mouseClickDrafts2};
 var years, teams;
+
+var legendKey ={};
 //needed for legend - decide how many keys should be there
-var legendKey = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
+legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {"N/A": "gone", "ACT": "act", "OTHER_TEAM": "other_team", "SUS": "sus", "UDF": "udf", "other": "other"},
                text: {"N/A": ["Not Active", 120], "ACT": ["Active", 107], "OTHER_TEAM": ["Other Team", 93], "SUS": ["Suspended", 101], "UDF": ["Unsigned Draft Pick", 106], "other": ["Other",120]} };
 
+legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "pink"},
+                class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
+               text: {"0-30": ["0-30", 120], "31-60": ["31-60", 107], "61-90": ["6-90", 93], "91-120": ["90-120", 101], "121-150": ["120-150", 106], "N/A": ["N/A",120]} };
+
+legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
+                class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
+               text: {1: ["0-30", 120], 2: ["31-60", 120],3: ["61-90", 120], 4: ["91-120", 120], 5: ["121-150", 120], "other": ["N/A",120]} };
+
+
 NFC_AFC_DIVISIONS = {'New Orleans Saints': 'NFC', 'Pittsburgh Steelers': 'AFC', 'New England Patriots': 'AFC', 'Tampa Bay Buccaneers': 'NFC', 'Philadelphia Eagles': 'NFC', 'Atlanta Falcons': 'NFC', 'Cleveland Browns': 'AFC', 'Cincinnati Bengals': 'AFC', 'Los Angeles Chargers': 'AFC', 'Oakland Raiders': 'AFC', 'Buffalo Bills': 'AFC', 'New York Giants': 'NFC', 'Detroit Lions': 'NFC', 'Los Angeles Rams': 'NFC', 'Carolina Panthers': 'NFC', 'San Francisco 49ers': 'NFC', 'Indianapolis Colts': 'AFC', 'Seattle Seahawks': 'NFC', 'Arizona Cardinals': 'NFC', 'Houston Texans': 'AFC', 'Tennessee Titans': 'AFC', 'Jacksonville Jaguars': 'AFC', 'Chicago Bears': 'NFC', 'Washington Redskins': 'NFC', 'Miami Dolphins': 'AFC', 'New York Jets': 'AFC', 'Baltimore Ravens': 'AFC', 'Kansas City Chiefs': 'AFC', 'Denver Broncos': 'AFC', 'Green Bay Packers': 'NFC', 'Minnesota Vikings': 'NFC', 'Dallas Cowboys': 'NFC'};
 
-var border
+var border,colorBy='status';
+max = {
+    'GamesStarted':150,
+    'ApproxValue':150
+
+}
 
 // STATIC FINAL VAR
 var YLOC_SCALE = 1.4;
 var CIRCLE_GAP_FACTOR = 1.6; // To have same gap between rounds
-
-
-var initYears = function (data, ddData) {
-    //filter the data using team name
-    //because of ddslick...
-    var filteredD = data.filter(function(d) {
-        return d.team ==ddData.selectedData.text
-    });
-    return filteredD;
-};
 
 var filterByTeamName = function(data, teamName) {
     
@@ -39,13 +43,13 @@ var filterByTeamName = function(data, teamName) {
     return dataFilteredByTeam;
 };
 // Filter by names of players in drafts
-var initMouseClickDraft = function(data, draft) {
+var initMouseClickDraft = function(data) {
     var filteredD = data.filter(function(d) {
         var isName = false;
         var names = d.name.split(" ");
         var name = names[1] + ", " +names[0];
-        for (var i = 0; i < draft.length; i++) {
-            isName = name ==draft[i].name;
+        for (var i = 0; i < draftsFilteredByTeamName.length; i++) {
+            isName = name ==draftsFilteredByTeamName[i].name;
             if (isName) {
                 break;
             }
@@ -54,15 +58,15 @@ var initMouseClickDraft = function(data, draft) {
     });
     return filteredD;
 };
-var initJson = function (draft, keyMC, svg, identifier) {
+var initJson = function (svg) {
     d3.json('playerProfileAll.json', function(data) {
-        mcDraftsWrap[keyMC] = initMouseClickDraft(data, draft);
-        mouseClick(svg, mcDraftsWrap[keyMC], "#clickProf"+identifier, draft);
+        mouseClickDrafts = initMouseClickDraft(data);
+        mouseClick(svg, mouseClickDrafts, "#clickProf");
     });
 };
 
 d3.json('draftScores.json', function(data) {
-    
+    colorBy= $("input[type='radio']").val();
     var selectOptions={};
     var teamNames = {};
     for (var i in data){
@@ -114,13 +118,8 @@ d3.json('draftScores.json', function(data) {
      
         displayPlayerCircles(data, teamName, previewSvg, previewSizes)
     }
-
-
-
-
     
-    
-    var borderParams = $(".Svg1").parent().offset()
+//    var borderParams = $(".Svg1").parent().offset()
     d3.select(".content").append("svg")
         .attr("id", "selectedBorder")
         .append("rect")
@@ -128,9 +127,8 @@ d3.json('draftScores.json', function(data) {
             .attr("height", 100)
 
     $(".teamDiv"+1).trigger("click");
-   
-//    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
-//    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
+    d3.select(".content").append("div")
+        .attr("id", "clickProf")
     
     createLegend()
 
@@ -138,14 +136,17 @@ d3.json('draftScores.json', function(data) {
 });
 
 function displayFullTeamInfo(data, teamName, svgHolder, selectedSizes) {
-//    initJson(draftsFilteredByTeamName, "first", svg, 1)
     var svg = createSvg(svgHolder, "selectedSvg","", selectedSizes.width, selectedSizes.height);
-    svgHolder.insert("div", ":first-child")
+    teamNameDiv = svgHolder.insert("div", ":first-child")
                 .attr("class", "teamTitle")
-                .append("img")
-                    .attr("id", "teamLogo")
-                    .attr("src", "images/" + teamName + ".png");
-    d3.select(".teamTitle")
+
+    teamNameDiv.style("opacity", 0)
+                .transition().duration(500).style("opacity", 1);
+
+    teamNameDiv.append("img")
+        .attr("id", "teamLogo")
+        .attr("src", "images/" + teamName + ".png");
+    teamNameDiv
         .append("div")
             .attr("id", "teamName")
             .text(teamName);
@@ -153,6 +154,8 @@ function displayFullTeamInfo(data, teamName, svgHolder, selectedSizes) {
     addXYLabels(svg, selectedSizes.radius);
     addPositionLabels(svg, positionFunctions);
     addHoverPreview(svg)
+    d3.selectAll("#clickProf > *").remove();
+    initJson(svg)
 }
 
 // For displaying all of the charts for all of the teams
@@ -320,10 +323,14 @@ function createChart(svg, sizes) {
     draftPicks = 0;
     circleWrap.append("circle")
         .attr("class", function(d) {
-           if (legendKey.class[d.status] === undefined) {
-               return "other"
+            val =d[colorBy];
+           if (legendKey[colorBy].class[d[colorBy]] === undefined) {
+               return legendKey[colorBy].class['other']
            }
-           return legendKey.class[d.status]
+           if(colorBy !='status'){
+                val = (parseInt(d[colorBy])+1)%max[colorBy]
+           }
+           return legendKey[colorBy].class[val]
         })
         .attr("r", radius)
         .attr("cx", function(d,i) {
@@ -346,9 +353,28 @@ function createChart(svg, sizes) {
 }
 
 
+function recolorPlayers(){
+
+    d3.selectAll(".content circle")
+        .attr("class", function(d) {
+            val =d[colorBy];
+           if (legendKey[colorBy].class[d[colorBy]] === undefined) {
+               return legendKey[colorBy].class['other']
+           }
+           if(colorBy !='status'){
+                val = (parseInt(d[colorBy])+1)%max[colorBy]
+           }
+           return legendKey[colorBy].class[val]
+        })
+
+
+
+}
+
 function createLegend(){
 
     //create legend
+    d3.select("#legend svg").remove();
     var svgOrig = d3.select("#legend").append("svg")
         .attr("width", "700px") //to keep it below the svg files above
         .attr("height", "75px");
@@ -356,13 +382,13 @@ function createLegend(){
         .attr("class", "legend")
         .attr("transform","translate(45,5)");
     var count = 0;
-    for (var i in legendKey.class) {
-        keys = Object.keys(legendKey.class);
+    for (var i in legendKey[colorBy].class) {
+        keys = Object.keys(legendKey[colorBy].class);
         legend.append("circle")
-        .attr("cx", margin.left - 30 +count*legendKey.text[i][1])
+        .attr("cx", margin.left - 30 +count*legendKey[colorBy].text[i][1])
         .attr("cy", 30)
         .attr("r", 10)
-        .attr("class", legendKey.class[i])
+        .attr("class", legendKey[colorBy].class[i])
         .on("click", function(d) {
             var classSelect = this.className.baseVal;
             if (clickedDict[classSelect] == false) {
@@ -373,50 +399,49 @@ function createLegend(){
             } else {
                 d3.selectAll("."+classSelect).each(function(d, i) {
                     d3.select(this).style("fill", function(d) {
-                        return legendKey.basic[d3.select(this).attr("class").toUpperCase()];
+                        return legendKey[colorBy].basic[d3.select(this).attr("class").toUpperCase()];
                     });
                 });
                 clickedDict[classSelect]=false;
             }
         });
         legend.append("text")
-            .attr("x", margin.left-15 +count *legendKey.text[i][1])
+            .attr("x", margin.left-15 +count *legendKey[colorBy].text[i][1])
             .attr("y", 35)
 //            .style("font-family", "sans-serif")
 //            .style("fill", "white")
-            .text(legendKey.text[i][0]);
+            .text(legendKey[colorBy].text[i][0]);
         count = count+1;
     }
 }
 
-function mouseClick(svg, mcDraft, clickProf, draft) {
+function mouseClick(svg, mcDraft, clickProf) {
     // On mouse click on any of the circles, show player profile
-    var identifier = clickProf.slice(-1);
     svg.selectAll("g > g").each(function(d) {
         d3.select(this)
             .on("click", function(d) {
                 var profile = mcDraft.filter(function(dClick) {
-                        names = dClick.name.split(" ");
-                        name = names[1]+", "+names[0];
+                        var names = dClick.name.split(" ");
+                        var name = names[1]+", "+names[0];
                          return name === d.name;
                      });
             if (profile.length > 0) {
-                if (d.clicked == undefined || !d.clicked) {
-                    if (draft.active != undefined) {
-                        draft.active.clicked = false;
+                if (d.clicked === undefined || !d.clicked) {
+                    if (draftsFilteredByTeamName.active !== undefined) {
+                        draftsFilteredByTeamName.active.clicked = false;
                     }
-                    if (draft.prevCircle != undefined) {
+                    if (draftsFilteredByTeamName.prevCircle !== undefined) {
                         //Unhighlight the previously selected circle
-                        d3.select(draft.prevCircle).style("stroke", function(d) {
-                            return legendKey.basic[draft.prevCircle.className.baseVal.toUpperCase()];
+                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke", function() {
+                            return legendKey[colorBy].basic[draftsFilteredByTeamName.prevCircle.className.baseVal.toUpperCase()];
                         });
 
-                        d3.select(draft.prevCircle).style("stroke-opacity", "1");
-                        d3.select(draft.prevCircle).style("stroke-width", "2px")
+                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-opacity", "1");
+                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-width", "2px")
                     
                     }
                     size = parseInt(window.innerWidth) * 0.2;
-                    draft.active = d;
+                    draftsFilteredByTeamName.active = d;
                     d3.selectAll(clickProf+" > *").remove();
                     d3.select(clickProf).append("table").append("caption")
                         .attr("class", "nameCap")
@@ -435,7 +460,7 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         .attr("colspan", "2")
                         .attr("class", "heading")
                         .text(function() {
-                            if (profile[0].team == undefined) {
+                            if (profile[0].team === undefined) {
                                 return "Not Active"
                             }
                             return profile[0].number + " " + profile[0].team
@@ -445,43 +470,43 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         .attr("class", "heading")
                         .text("Personal Information");
                     tbody.append("tr")
-                        .attr("id", "bornTr"+identifier)
+                        .attr("id", "bornTr")
                         .append("th")
                         .attr("scope", "row")
                         .attr("class", "infoHeading")
                         .append("span")
                         .text("Born: ");
-                    d3.select("#bornTr"+identifier)
+                    d3.select("#bornTr")
                         .append("td").text(function() {
                         return checkUndefinedPlayer(profile[0].Born)
                     });
                     tbody.append("tr")
-                        .attr("id", "ageTr"+identifier)
+                        .attr("id", "ageTr")
                         .append("th")
                         .attr("scope", "row")
                         .attr("class", "infoHeading")
                         .append("span").text("Age: ");
-                    d3.select("#ageTr"+identifier).append("td")
+                    d3.select("#ageTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0].Age)
                     });
                     tbody.append("tr")
-                        .attr("id", "heightTr"+identifier)
+                        .attr("id", "heightTr")
                         .append("th")
                         .attr("class", "infoHeading")
                         .attr("scope", "row")
                         .text("Height: ");
-                    d3.select("#heightTr"+identifier).append("td")
+                    d3.select("#heightTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0].Height)
                     });
                     tbody.append("tr")
-                        .attr("id", "weightTr"+identifier)
+                        .attr("id", "weightTr")
                         .append("th")
                         .attr("class", "infoHeading")
                         .attr("scope", "row")
                         .text("Weight: ");
-                    d3.select("#weightTr"+identifier).append("td")
+                    d3.select("#weightTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0].Weight)
                     });
@@ -490,23 +515,23 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         .attr("colspan", "2")
                         .text("Career Information");
                     tbody.append("tr")
-                        .attr("id", 'hsTr'+identifier)
+                        .attr("id", 'hsTr')
                         .append("td")
                             .attr("scope", "row")
                             .attr("class", "infoHeading")
                             .text("High School: ");
-                    d3.select("#hsTr"+identifier).append("td")
+                    d3.select("#hsTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0]["High School"])
                     }
                         );
                     tbody.append("tr")
-                        .attr("id", 'collegeTr'+identifier)
+                        .attr("id", 'collegeTr')
                         .append("td")
                             .attr("scope", "row")
                             .attr("class", "infoHeading")
                             .text("College: ");
-                    d3.select("#collegeTr"+identifier).append("td")
+                    d3.select("#collegeTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0].College)
                     });
@@ -515,12 +540,12 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         .attr("colspan", "2")
                         .text("Career History");
                     tbody.append("tr")
-                        .attr("id", "expTr"+identifier)
+                        .attr("id", "expTr")
                         .append("td")
                             .attr("scope", "row")
                             .attr("class", "infoHeading")
                             .text("Experience: ");
-                    d3.select("#expTr"+identifier).append("td")
+                    d3.select("#expTr").append("td")
                         .text(function() {
                         return checkUndefinedPlayer(profile[0].Experience)
                     });
@@ -532,12 +557,12 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                         var stat = profile[0].stats[k];
                         var statKeys = Object.keys(stat);
                         tbody.append("tr")
-                            .attr("id", statKeys[0]+"Tr"+identifier)
+                            .attr("id", statKeys[0]+"Tr")
                             .append("td")
                                 .attr("scope", "row")
                                 .attr("class", "infoHeading")
                                 .text(statKeys[0] + ": ");
-                        d3.select("#"+statKeys[0]+"Tr"+identifier).append("td")
+                        d3.select("#"+statKeys[0]+"Tr").append("td")
                             .text(stat[statKeys[0]]);
                     }
                     goToByScroll(this.parentElement.parentElement.parentElement.parentElement.id, profile[0].name);
@@ -548,7 +573,7 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                     d3.select(childCircle).style("stroke", "#ffeb00");
                     d3.select(childCircle).style("stroke-opacity", ".5");
                     d3.select(childCircle).style("stroke-width", "6px");
-                    draft.prevCircle = childCircle
+                    draftsFilteredByTeamName.prevCircle = childCircle
                 } else {
                     d3.selectAll(clickProf+" > *").remove();
                     d.clicked =false;
@@ -556,7 +581,7 @@ function mouseClick(svg, mcDraft, clickProf, draft) {
                     //Unhighlight the circle and go back to normal styling
                     var childCircle = this.childNodes[0];
                     d3.select(childCircle).style("stroke", function(d) {
-                        return legendKey.basic[childCircle.className.baseVal.toUpperCase()];
+                        return legendKey[colorBy].basic[childCircle.className.baseVal.toUpperCase()];
                     });
 
                     d3.select(childCircle).style("stroke-opacity", "1");
@@ -582,15 +607,21 @@ function checkUndefinedPlayer(playerInfo) {
 
 function createSvg(svgHolder, className,teamName, width, height) {
     var radius = Math.ceil(width * 0.02);
-    return svgHolder.append("svg")
+    var g =svgHolder.append("svg")
                 .attr("class", className+" preview-svg")
                 .attr("width", width)//width + margin.left + margin.right)
                 .attr("height", (height + margin.top + margin.bottom))
+
                 .append("g")
                 .attr("class", "circleGroup")
                 .attr("team-name", teamName)
                 .attr("transform",
                   "translate(" + radius * 2.5 + "," + radius * 5 + ")")
+    g.style("opacity", 0)
+                .transition().duration(500).style("opacity", 1);
+    return g;
+
+
 }
 
 function addHoverPreview(svg) {
@@ -610,6 +641,18 @@ function addHoverPreview(svg) {
             divText
                 .append("div")
                 .text("Round: " + d.round)
+
+            divText
+                .append("div")
+                .text("Status: " + d['status'])
+
+            divText
+                .append("div")
+                .text("Games Started: " + d['GamesStarted'])
+
+            divText
+                .append("div")
+                .text("Approximate Value: " + d.ApproxValue)
         })
         .on("mousemove", function() {
             d3.select(this).style("opacity", 1);
@@ -687,6 +730,17 @@ function onPreviewHover(holder) {
         d3.select(this).style("opacity", 1.0)
     })
 }
+
+
+$(function(){
+
+$("input[type='radio']").on("click",function(){
+    colorBy =this.value;
+    createLegend();
+    recolorPlayers();
+})
+
+})
 
 //function onPreviewClick(svgClass, svgDisplay, sizes, data, ) {
 //    svgClicked = d3.select("." + svgClass)
