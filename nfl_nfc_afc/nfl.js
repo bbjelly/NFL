@@ -61,7 +61,7 @@ var initJson = function (draft, keyMC, svg, identifier) {
     });
 };
 
-d3.json('combinedRosterDraft.json', function(data) {
+d3.json('draftScores.json', function(data) {
     
     var selectOptions={};
     var teamNames = {};
@@ -105,7 +105,7 @@ d3.json('combinedRosterDraft.json', function(data) {
         previewHolder.on("click", function(d) {
             var borderParams = $(this).offset()
             d3.select("#selectedBorder > rect")
-                .attr("x", borderParams.left - 22)
+                .attr("x", borderParams.left -27)
                 .attr('y', borderParams.top - 92)
 //            d3.select(this).style("border", "1px solid #ddd")
             d3.selectAll("#SvgHolder > *").remove();
