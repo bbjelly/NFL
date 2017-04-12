@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <title> NFL - PRO TEAMS</title>
+    <script src="jquery-1.12.2.min.js"></script>
+<!--    <script src="jquery-migrate-1.2.1.min.js"></script>-->
+    <link href="nflStyleSheet_white.css" rel="stylesheet" type="text/css">
+	<script type="text/javascript" src="jquery.ddslick.min.js"></script>
+    <script src = "d3.min.js"></script>
+    <script src = "nfl.js"></script>
+</head>
+<body>
+    <div id = "header">
+        <div class="inputs">
+            <label><input checked="checked" value="status" name="playercolor" type="radio">Player Status</label>
+            <label title="As calculated from http://www.pro-football-reference.com/"><input value="GamesStarted" name="playercolor" type="radio">Games Started</label>
+            <label title="As calculated from http://www.pro-football-reference.com/"><input value="ApproxValue" name="playercolor" type="radio">Approximate Value</label>
+        </div>
+        <h1>NFL Players Visualization</h1>
+
+    </div>
+     <hr style="width: 100%;">
+    <div id = "positionCheck"></div>
+    <div id="legend"></div>
+  
+    <div style="float:left; margin-left:20px;height: 900px;" class="content">
+        <div class="team-info" style="margin-top:10px;" id="AFC"><div style="margin-top: 30px;">AFC</div></div>
+        <div class="team-info" id="NFC"><div style="margin-top: 30px;">NFC</div></div>
+    </div>
+ <!--<hr style="width: 100%;">-->
+
+    <div class="footer">
+    <div class="text-muted">
+        <div>
+            Created by:
+            <a href="//github.com/bbjelly">Sally Kim</a>,
+             <a href="//sakshi-23.github.io">Sakshi Pratap</a>,
+             <a href="www.cc.gatech.edu/~stasko/">John Stasko</a>
+        </div>
+        <div>
+            Approximate Values and Games Started are provided by <a href="http://www.pro-football-reference.com/"> http://www.pro-football-reference.com/</a>
+
+        </div>
+    </div>
+
+</div>
+</body>
