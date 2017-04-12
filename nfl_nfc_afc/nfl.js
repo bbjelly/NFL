@@ -78,7 +78,7 @@ d3.json('combinedRosterDraft.json', function(data) {
     }
     
     
-    var selectedSizes = {"width": 900 - margin.left - margin.right, "height": 700 - margin.top - margin.bottom, radius: 12.5};
+    var selectedSizes = {"width": 1000 , "height": 700 - margin.top - margin.bottom, radius: 12.5};
     var svgHolder = d3.select(".content").append("div")
         .attr("id", "SvgHolder")
         .attr("height", selectedSizes.height + margin.top + margin.bottom)
@@ -92,10 +92,10 @@ d3.json('combinedRosterDraft.json', function(data) {
         var previewHolder;
         if (NFC_AFC_DIVISIONS[teamName] === "AFC") {
             previewHolder = afcSvgHolder.append("div")
-                                .attr("class", "teamDiv")
+                                .attr("class", "teamDiv teamDiv"+i)
         } else {
             previewHolder = nfcSvgHolder.append("div")
-                                .attr("class", "teamDiv")
+                                .attr("class", "teamDiv teamDiv"+i)
         }
         
         var previewSvg = createSvg(previewHolder, "Svg" + i, teamName, previewSizes.width, previewSizes.height)
@@ -105,8 +105,8 @@ d3.json('combinedRosterDraft.json', function(data) {
         previewHolder.on("click", function(d) {
             var borderParams = $(this).offset()
             d3.select("#selectedBorder > rect")
-                .attr("x", borderParams.left - 20)
-                .attr('y', borderParams.top - 98)
+                .attr("x", borderParams.left - 22)
+                .attr('y', borderParams.top - 92)
 //            d3.select(this).style("border", "1px solid #ddd")
             d3.selectAll("#SvgHolder > *").remove();
             displayFullTeamInfo(data, this.children[0].children[0].getAttribute("team-name"), svgHolder, selectedSizes)
@@ -114,18 +114,22 @@ d3.json('combinedRosterDraft.json', function(data) {
      
         displayPlayerCircles(data, teamName, previewSvg, previewSizes)
     }
+
+
+
+
     
     
-//    var borderParams = $(".Svg1").parent().offset()
+    var borderParams = $(".Svg1").parent().offset()
     d3.select(".content").append("svg")
         .attr("id", "selectedBorder")
         .append("rect")
             .attr("width", 80)
             .attr("height", 100)
-            .attr("x", 140.2777862548828 - 20) // hardcoded due to asynchronous
-            .attr("y", 219.93057250976562 - 98)
+
+    $(".teamDiv"+1).trigger("click");
    
-    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
+//    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
 //    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
     
     createLegend()
@@ -586,7 +590,7 @@ function createSvg(svgHolder, className,teamName, width, height) {
                 .attr("class", "circleGroup")
                 .attr("team-name", teamName)
                 .attr("transform",
-                  "translate(" + radius * 5 + "," + radius * 5 + ")")
+                  "translate(" + radius * 2.5 + "," + radius * 5 + ")")
 }
 
 function addHoverPreview(svg) {
