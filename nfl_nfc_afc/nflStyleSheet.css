@@ -227,6 +227,17 @@ span{
 }
 
 
+.footer a{
+    color: #3c7bca;
+}
+
+.text-muted{
+        background: #3e3e3e;
+    display: inline-block;
+    padding: 5px;
+    width: 100%;
+}
+
 /*LOGOS*/
 .teamTitle {
     margin-left: 5%;
@@ -255,5 +266,18 @@ span{
     right: 20px;
     font-size: 10px;
     z-index: 10000;
+    font-size:12px;
 
 }
+
+
+
+.one{fill:rgb(239,243,255)}
+.two{fill:#98bfe5}
+.three{fill:#4292c6}
+ .four{fill:#08519c}
+ .five{fill:#08306b}
+
+.noinfo{fill:#3a3a3a}
+
+

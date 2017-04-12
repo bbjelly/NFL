@@ -13,21 +13,21 @@ legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#
                 class: {"N/A": "gone", "ACT": "act", "OTHER_TEAM": "other_team", "SUS": "sus", "UDF": "udf", "other": "other"},
                text: {"N/A": ["Not Active", 120], "ACT": ["Active", 107], "OTHER_TEAM": ["Other Team", 93], "SUS": ["Suspended", 101], "UDF": ["Unsigned Draft Pick", 106], "other": ["Other",120]} };
 
-legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "pink"},
+legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-               text: {"0-30": ["0-30", 120], "31-60": ["31-60", 107], "61-90": ["6-90", 93], "91-120": ["90-120", 101], "121-150": ["120-150", 106], "N/A": ["N/A",120]} };
+                text: {1: ["0-20", 120], 2: ["21-40", 120],3: ["41-80", 120], 4: ["81-120", 120], 5: ["121-200", 120], "other": ["Unavailable",115]} };
 
 legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-               text: {1: ["0-30", 120], 2: ["31-60", 120],3: ["61-90", 120], 4: ["91-120", 120], 5: ["121-150", 120], "other": ["N/A",120]} };
+               text: {1: ["0-15", 120], 2: ["16-30", 120],3: ["31-60", 120], 4: ["61-90", 120], 5: ["91-150", 120], "other": ["Unavailable",115]} };
 
 
 NFC_AFC_DIVISIONS = {'New Orleans Saints': 'NFC', 'Pittsburgh Steelers': 'AFC', 'New England Patriots': 'AFC', 'Tampa Bay Buccaneers': 'NFC', 'Philadelphia Eagles': 'NFC', 'Atlanta Falcons': 'NFC', 'Cleveland Browns': 'AFC', 'Cincinnati Bengals': 'AFC', 'Los Angeles Chargers': 'AFC', 'Oakland Raiders': 'AFC', 'Buffalo Bills': 'AFC', 'New York Giants': 'NFC', 'Detroit Lions': 'NFC', 'Los Angeles Rams': 'NFC', 'Carolina Panthers': 'NFC', 'San Francisco 49ers': 'NFC', 'Indianapolis Colts': 'AFC', 'Seattle Seahawks': 'NFC', 'Arizona Cardinals': 'NFC', 'Houston Texans': 'AFC', 'Tennessee Titans': 'AFC', 'Jacksonville Jaguars': 'AFC', 'Chicago Bears': 'NFC', 'Washington Redskins': 'NFC', 'Miami Dolphins': 'AFC', 'New York Jets': 'AFC', 'Baltimore Ravens': 'AFC', 'Kansas City Chiefs': 'AFC', 'Denver Broncos': 'AFC', 'Green Bay Packers': 'NFC', 'Minnesota Vikings': 'NFC', 'Dallas Cowboys': 'NFC'};
 
 var border,colorBy='status';
 max = {
-    'GamesStarted':150,
-    'ApproxValue':150
+    'GamesStarted':20,
+    'ApproxValue':15
 
 }
 
@@ -325,12 +325,17 @@ function createChart(svg, sizes) {
     circleWrap.append("circle")
         .attr("class", function(d) {
             val =d[colorBy];
-           if (legendKey[colorBy].class[d[colorBy]] === undefined) {
+           if(colorBy !='status'){
+                val1 = parseInt(parseInt(val)/max[colorBy])+1;
+                if(val1>3)
+                    val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                val=val1;
+           }
+
+           if(legendKey[colorBy].class[val] === undefined) {
                return legendKey[colorBy].class['other']
            }
-           if(colorBy !='status'){
-                val = (parseInt(d[colorBy])+1)%max[colorBy]
-           }
+           console.log(val)
            return legendKey[colorBy].class[val]
         })
         .attr("r", radius)
@@ -357,14 +362,19 @@ function createChart(svg, sizes) {
 function recolorPlayers(){
 
     d3.selectAll(".content circle")
-        .attr("class", function(d) {
+         .attr("class", function(d) {
             val =d[colorBy];
-           if (legendKey[colorBy].class[d[colorBy]] === undefined) {
+           if(colorBy !='status'){
+                val1 = parseInt(parseInt(val)/max[colorBy])+1;
+                if(val1>3)
+                    val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                val=val1;
+           }
+
+           if(legendKey[colorBy].class[val] === undefined) {
                return legendKey[colorBy].class['other']
            }
-           if(colorBy !='status'){
-                val = (parseInt(d[colorBy])+1)%max[colorBy]
-           }
+           console.log(val)
            return legendKey[colorBy].class[val]
         })
 
@@ -399,13 +409,23 @@ function createLegend(){
                 clickedDict[classSelect]=true;
             } else {
                 d3.selectAll("."+classSelect).each(function(d, i) {
-                    d3.select(this).style("fill", function(d) {
-                        return legendKey[colorBy].basic[d3.select(this).attr("class").toUpperCase()];
+                    d3.select(this).attr("class", function(d) {
+                        val =d[colorBy];
+
+                       if(colorBy !='status'){
+
+                            val = parseInt(parseInt(val)/max[colorBy])+1;
+                       }
+                       if(legendKey[colorBy].class[val] === undefined) {
+                           return legendKey[colorBy].class['other']
+                       }
+                       console.log(val)
+                       return legendKey[colorBy].class[val]
+                    })
+                            });
+                            clickedDict[classSelect]=false;
+                        }
                     });
-                });
-                clickedDict[classSelect]=false;
-            }
-        });
         legend.append("text")
             .attr("x", margin.left-15 +count *legendKey[colorBy].text[i][1])
             .attr("y", 35)
