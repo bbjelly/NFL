@@ -92,9 +92,11 @@ d3.json('combinedRosterDraft.json', function(data) {
         onPreviewHover(previewHolder);
         previewHolder.on("click", function(d) {
             var borderParams = $(this).offset()
+            console.log(this.offsetTop)
+            console.log($(this).offset())
             d3.select("#selectedBorder > rect")
-                .attr("x", borderParams.left - 22)
-                .attr('y', borderParams.top - 92)
+                .attr("x", borderParams.left - 22 - $(window).scrollLeft())
+                .attr('y', borderParams.top - 88)
 //            d3.select(this).style("border", "1px solid #ddd")
             d3.selectAll("#SvgHolder > *").remove();
             displayFullTeamInfo(data, this.children[0].children[0].getAttribute("team-name"), svgHolder, selectedSizes)
@@ -107,7 +109,7 @@ d3.json('combinedRosterDraft.json', function(data) {
     d3.select(".content").append("svg")
         .attr("id", "selectedBorder")
         .append("rect")
-            .attr("width", 80)
+            .attr("width", 75)
             .attr("height", 100)
 
     $(".teamDiv"+1).trigger("click");
@@ -143,9 +145,8 @@ function displayPlayerCircles(data, teamName, svg, sizes) {
     draftsFilteredByTeamName = filterByTeamName(data, teamName);
     
     return createChart(svg, sizes);
-//    createChart(draftsFilteredByTeamName, svg, sizes)
 }
-//MODIFY
+
 function createChart(svg, sizes) {
     width = sizes.width;
     height = sizes.height;
@@ -402,7 +403,7 @@ function mouseClick(svg, mcDraft, clickProf) {
                     d3.selectAll(clickProf+" > *").remove();
                     d3.select(clickProf).append("table").append("caption")
                         .attr("class", "nameCap")
-                        .text(profile[0].name);
+                        .text(profile[0].name)
                     var tbody = d3.select(clickProf).select("table")
                         .append("tbody");
                     tbody.append("tr").append("td")
@@ -411,8 +412,8 @@ function mouseClick(svg, mcDraft, clickProf) {
                         .append("img")
                         .attr("id", profile[0].name)
                         .attr("src", profile[0].picture)
-                        .style("width", size + "px")
-                        .style("height", size + "px");
+//                        .style("width", size + "px")
+//                        .style("height", size + "px");
                     tbody.append("tr").append("th")
                         .attr("colspan", "2")
                         .attr("class", "heading")
@@ -623,7 +624,7 @@ function addXYLabels(svg, radius) {
     var arr = [1,2,3,4,5,6,7];
     var xTicks = svg.append("g")
         .attr("class", "xAxis")
-        .attr("transform", "translate(-5,-35)")
+        .attr("transform", "translate(-6,-35)")
         .style("font-size", radius * 1.3);
     
     for (var i = 0; i < arr.length; i++) {
@@ -632,7 +633,7 @@ function addXYLabels(svg, radius) {
             .attr("x", function() {
                 var sumFactor = 0;
                 for (var j = 0; j < i; j++) {
-                    sumFactor += CIRCLE_GAP_FACTOR;
+                    sumFactor += (CIRCLE_GAP_FACTOR - 0.01);
                 }
                     return radius * 3 * (sumFactor)+radius*2.5;
             })

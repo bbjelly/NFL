@@ -32,26 +32,22 @@ h1{
     overflow: auto;
     cursor: default; 
 }
+
+/*PLAYER INFORMATION*/
 #clickProf {
     flex: 1;
-    margin-left: "930px";
+    margin-left: 930px;
+}
+
+#clickProf img {
+    height: 150px;
+    width: auto;
 }
 
 /*LOGOS*/
 .select_style {
     display: inline-block;
     width: 49%;
-}
-
-#teamNames:hover {
-/*
-    background-color: aliceblue;
-    color: blue;
-    opacity: .8;
-*/
-}
-#teamNames option {
-/*    background: aliceblue;*/
 }
 
 /*GRAPH LABELS*/
@@ -133,25 +129,31 @@ text {
 /*CLICK PROFILE*/
 /*TABLE*/
 table {
-    width:22em;
-    height: 700px;
-    line-height: 1.2em;
+    width: 255px;
+    height: 540px;
+    /* line-height: 1.2em; */
 }
 
 .heading {
+    font-size: 15px;
     text-align: center;
     background: #97233F;
     color: white;
-    line-height: 1.5em;
+     line-height: 25px; 
+    opacity: 0.9;
 }
 
 .infoHeading {
-    text-align: right;
-    width: 40%;
+    font-size: 14px;
+    text-align: center;
+/*    width: 40%;*/
+}
+.infoHeading td {
+    font-size: 14px;
 }
 .nameCap {
     line-height: initial;
-    font-size: 125%;
+    font-size: 110%;
     font-weight: bold;
     padding: 0.2em;
 }
@@ -163,7 +165,7 @@ span{
 }
 */
 
-span {
+.team-info span {
    font-size: 10px;
     position: absolute;
     margin-left: -60px;
