@@ -295,7 +295,7 @@ function createChart(svg, sizes) {
                     return yLoc(d.year) + radius * 1.3
                 }
             }
-            if (posArr[0].values > 2) { // 3 and 4
+            if (posArr[0].values === 3 || posArr[0].values === 4) { // 3 and 4
                 if (draftPicks > 2) {
                     return yLoc(d.year) + radius * 0.7
                 } else {
