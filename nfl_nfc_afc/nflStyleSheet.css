@@ -92,6 +92,10 @@ text {
 
 /*CIRCLES*/
 /*STATUS COLORS*/
+
+circle{
+    cursor:pointer;
+}
 .gone{
      fill: #FF3838; 
     opacity: 0.8;
@@ -280,4 +284,8 @@ span{
 
 .noinfo{fill:#3a3a3a}
 
+
+.unselected{
+fill:#424343!important;
+}
 

@@ -401,14 +401,14 @@ function createLegend(){
         .attr("r", 10)
         .attr("class", legendKey[colorBy].class[i])
         .on("click", function(d) {
-            var classSelect = this.className.baseVal;
-            if (clickedDict[classSelect] == false) {
+            var classSelect = this.className.baseVal.split(" ")[0];
+            if (!clickedDict[classSelect] ) {
                 d3.selectAll("."+classSelect).each(function(d, i) {
-                    d3.select(this).style("fill", "#424343");
+                    d3.select(this).classed("unselected",true);
                 });
                 clickedDict[classSelect]=true;
             } else {
-                d3.selectAll("."+classSelect).each(function(d, i) {
+                d3.selectAll(".content ."+classSelect).each(function(d, i) {
                     d3.select(this).attr("class", function(d) {
                         val =d[colorBy];
 
@@ -422,10 +422,11 @@ function createLegend(){
                        console.log(val)
                        return legendKey[colorBy].class[val]
                     })
-                            });
-                            clickedDict[classSelect]=false;
-                        }
-                    });
+                });
+                clickedDict[classSelect]=false;
+                d3.select(this).classed("unselected",false);
+                }
+        });
         legend.append("text")
             .attr("x", margin.left-15 +count *legendKey[colorBy].text[i][1])
             .attr("y", 35)
@@ -757,6 +758,7 @@ $(function(){
 
 $("input[type='radio']").on("click",function(){
     colorBy =this.value;
+    clickedDict ={}
     createLegend();
     recolorPlayers();
 })
