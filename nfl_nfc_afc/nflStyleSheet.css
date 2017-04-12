@@ -214,7 +214,6 @@ span{
 /* TEAM DETAILED VIEW */
 .selectedSvg{
 /*    margin-left: 2%;*/
-    width: 40%;
     transition: all 0.5s ease;
 }
 #SvgHolder {
