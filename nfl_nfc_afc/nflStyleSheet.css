@@ -44,7 +44,7 @@ hr {
 .firstSvg, .secondSvg {
     flex: 0 0 65%;
 }
-#clickProf, #clickProf2 {
+#clickProf {
     flex: 1;
 }
 
