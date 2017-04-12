@@ -102,13 +102,8 @@ d3.json('combinedRosterDraft.json', function(data) {
      
         displayPlayerCircles(data, teamName, previewSvg, previewSizes)
     }
-
-
-
-
     
-    
-    var borderParams = $(".Svg1").parent().offset()
+//    var borderParams = $(".Svg1").parent().offset()
     d3.select(".content").append("svg")
         .attr("id", "selectedBorder")
         .append("rect")
@@ -118,8 +113,6 @@ d3.json('combinedRosterDraft.json', function(data) {
     $(".teamDiv"+1).trigger("click");
     d3.select(".content").append("div")
         .attr("id", "clickProf")
-    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
-//    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
     
     createLegend()
 
@@ -141,7 +134,7 @@ function displayFullTeamInfo(data, teamName, svgHolder, selectedSizes) {
     addXYLabels(svg, selectedSizes.radius);
     addPositionLabels(svg, positionFunctions);
     addHoverPreview(svg)
-    d3.selectAll("#clickProf1 > *").remove();
+    d3.selectAll("#clickProf > *").remove();
     initJson(svg)
 }
 

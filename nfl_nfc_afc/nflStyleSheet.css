@@ -32,39 +32,12 @@ h1{
     overflow: auto;
     cursor: default; 
 }
-
-#canvas {
-    display: flex;
-}
-#canvas2 {
-    display: flex;
-}
-.firstSvg, .secondSvg {
-    flex: 0 0 65%;
-}
 #clickProf {
     flex: 1;
+    margin-left: "930px";
 }
 
-/*SELECT OPTION*/
-.teamroster {
-    border: none;
-}
-.dd-selected {
-    padding: 5px 5px 0px 5px;
-    height: 60px;
-    color: #2B2B2B;
-}
-.dd-options { 
-    height: 382px;
-}
-.dd-selected-text {
-    margin-left: 10px;
-}
 /*LOGOS*/
-.dd-selected-image {
-    height: 50px;
-}
 .select_style {
     display: inline-block;
     width: 49%;
@@ -190,7 +163,7 @@ span{
 }
 */
 
-span{
+span {
    font-size: 10px;
     position: absolute;
     margin-left: -60px;
@@ -231,7 +204,6 @@ span{
 /* TEAM DETAILED VIEW */
 .selectedSvg{
 /*    margin-left: 2%;*/
-    width: 40%;
 }
 #SvgHolder {
     display: flex;
