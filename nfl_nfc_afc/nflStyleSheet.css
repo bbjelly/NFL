@@ -47,7 +47,6 @@ hr {
 #clickProf, #clickProf2 {
     flex: 1;
 }
-/*CIRCLES*/
 
 /*SELECT OPTION*/
 .teamroster {
@@ -123,43 +122,32 @@ text {
     opacity:0.9
 }
 
+/*CIRCLES*/
 /*STATUS COLORS*/
 .gone{
      fill: #FF3838; 
-    stroke: #FF5757;
     opacity: 0.8;
-    stroke-width: 2px;
 }
 
 .act {
     fill: lightgreen;
-    stroke: #C1EFC1;
     opacity: 0.8;
-    stroke-width: 2px;
 } 
 .sus {
     fill: #D7D6D6;
-    stroke: #f9f9f9;
     opacity: 0.8;
-    stroke-width: 2px;
 } 
 .udf {
     fill: grey;
-    stroke: #b9b9b9;
     opacity: 0.8;
-    stroke-width: 2px;
 }
 .other_team {
     fill: #A2AFEF;
-    stroke: #D3D3FE;
     opacity: 0.8;
-    stroke-width: 2px;
 } 
 .other {
     fill: gold;
-    stroke: yellow;
     opacity: 0.8;
-    stroke-width: 2px;
 }
 
 #legend{
@@ -233,7 +221,7 @@ span{
 }
 
 #selectedBorder {
-    width: 1280px;
+    width: 1350px;
     height: 250px;
 }
 #selectedBorder rect {

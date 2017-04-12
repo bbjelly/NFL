@@ -103,7 +103,7 @@ d3.json('combinedRosterDraft.json', function(data) {
                   .html(teamName)
         onPreviewHover(previewHolder);
         previewHolder.on("click", function(d) {
-            var borderParams = this.getBoundingClientRect()
+            var borderParams = $(this).offset()
             d3.select("#selectedBorder > rect")
                 .attr("x", borderParams.left - 20)
                 .attr('y', borderParams.top - 98)
@@ -116,7 +116,7 @@ d3.json('combinedRosterDraft.json', function(data) {
     }
     
     
-//    var borderParams = document.getElementsByClassName("Svg1")[0].parentElement.getBoundingClientRect()
+//    var borderParams = $(".Svg1").parent().offset()
     d3.select(".content").append("svg")
         .attr("id", "selectedBorder")
         .append("rect")
@@ -125,8 +125,8 @@ d3.json('combinedRosterDraft.json', function(data) {
             .attr("x", 140.2777862548828 - 20) // hardcoded due to asynchronous
             .attr("y", 219.93057250976562 - 98)
    
-//    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
-    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
+    displayFullTeamInfo(data, "Atlanta Falcons", svgHolder, selectedSizes);
+//    displayFullTeamInfo(data, "Baltimore Ravens", svgHolder, selectedSizes);
     
     createLegend()
 
@@ -280,11 +280,19 @@ function createChart(svg, sizes) {
             draftPicks++;
             prev_round = d.round;
             prev_year = d.year;
-            if (draftPicks > 2) {
-                if (posArr[0].values == 5 && draftPicks > 3) {
-                    return yLoc(d.year) + radius *2.7
+            if (posArr[0].values === 5 && draftPicks !== 3) {
+                if (draftPicks < 3) {
+                    return yLoc(d.year) - radius * 1.3
+                } else {
+                    return yLoc(d.year) + radius * 1.3
                 }
-                return yLoc(d.year) + radius*1.4
+            }
+            if (posArr[0].values === 3) {
+                if (draftPicks > 2) {
+                    return yLoc(d.year) + radius * 0.6
+                } else {
+                    return yLoc(d.year) - radius * 0.6
+                }
             }
             return yLoc(d.year)
         };
@@ -629,7 +637,7 @@ function addXYLabels(svg, radius) {
     var arr = [1,2,3,4,5,6,7];
     var xTicks = svg.append("g")
         .attr("class", "xAxis")
-        .attr("transform", "translate(-5,-25)")
+        .attr("transform", "translate(-5,-35)")
         .style("font-size", radius * 1.3);
     
     for (var i = 0; i < arr.length; i++) {
