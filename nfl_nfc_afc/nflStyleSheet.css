@@ -22,7 +22,7 @@ h1{
 
 /*SVG*/
 .left-align{
-    float:left;    
+    float:left;
     width: 49%;
     overflow: auto;
     border-right: 1px solid #4F4F4F;
@@ -31,7 +31,7 @@ h1{
 .scrollBox {
     width: 100%;
     overflow: auto;
-    cursor: default; 
+    cursor: default;
 }
 
 /*PLAYER INFORMATION*/
@@ -99,7 +99,7 @@ circle{
     cursor:pointer;
 }
 .gone{
-     fill: #FF3838; 
+     fill: #FF3838;
     opacity: 0.8;
 }
 
@@ -107,11 +107,11 @@ circle{
     fill: lightgreen;
     opacity: 0.8;
     transition: all 0.5s ease;
-} 
+}
 .sus {
     fill: #D7D6D6;
     opacity: 0.8;
-} 
+}
 .udf {
     fill: grey;
     opacity: 0.8;
@@ -119,7 +119,7 @@ circle{
 .other_team {
     fill: #A2AFEF;
     opacity: 0.8;
-} 
+}
 .other {
     fill: gold;
     opacity: 0.8;
@@ -150,7 +150,7 @@ table {
     text-align: center;
         background: #909090;
     color: white;
-     line-height: 25px; 
+     line-height: 25px;
     opacity: 0.9;
 }
 
@@ -184,7 +184,7 @@ span{
     width: 65px;
     overflow: hidden;
     cursor: default;
-   
+
 }
 
 /* TEAMS PREVIEW*/
