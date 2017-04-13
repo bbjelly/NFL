@@ -5,17 +5,33 @@ body {
     background: #2B2B2B;
     color: #ddd;
     font-family: "Helvetica Neue", Helvetica;
-     font-weight: normal;
+    font-weight: normal;
 }
 #header {
     margin-bottom: 20px;
     color: #F6F6F6;
     margin-left: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: #2B2B2B;
+    z-index: 100;
 }
+
+hr{
+
+    margin-bottom:0;
+}
+
+
 
 h1{
         font-family: "Montserrat", Arial, sans-serif;
     /* color: black; */
+    font-weight: normal;
+        margin: 10px;
+}
+text{
     font-weight: normal;
 }
 
@@ -38,11 +54,10 @@ h1{
 #clickProf {
     flex: 1;
     margin-left: 930px;
-
 }
 
 #clickProf img {
-        height: 150px;
+    height: 150px;
     width: auto;
     border: 2px solid gray;
 }
@@ -130,7 +145,7 @@ circle{
     position: absolute;
     /* left: 650px; */
     right: 0;
-    top: 20px;
+    top: 10px;
     fill: white;
     font-size:14px;
 }
@@ -148,7 +163,7 @@ table {
 .heading {
     font-size: 15px;
     text-align: center;
-        background: #909090;
+    background: #6f6f6f;
     color: white;
      line-height: 25px;
     opacity: 0.9;
@@ -209,6 +224,7 @@ span{
 #selectedBorder {
     width: 1350px;
     height: 250px;
+    margin-top: 10px;
 }
 #selectedBorder rect {
     fill: none;
@@ -218,6 +234,7 @@ span{
 /* TEAM DETAILED VIEW */
 .selectedSvg{
 /*    margin-left: 2%;*/
+    width: 40%;
     transition: all 0.5s ease;
 }
 #SvgHolder {
@@ -292,3 +309,31 @@ span{
 fill:#424343!important;
 }
 
+
+.year{
+
+   position: absolute;
+    top: 76px;
+    left: 39px;
+    font-size: 10px;
+    color: gray;
+
+}
+
+.round{
+       position: absolute;
+    top: 60px;
+    left: 70px;
+    font-size: 10px;
+    color: gray;
+}
+
+.axis-info{
+    border-left: 1px solid;
+    border-top: 1px solid white;
+    height: 100px;
+    width: 100px;
+    position: absolute;
+    margin-top: 13px;
+    margin-left: 37px;
+}

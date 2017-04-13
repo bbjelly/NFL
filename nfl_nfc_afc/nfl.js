@@ -112,7 +112,7 @@ d3.json('draftScores.json', function(data) {
             console.log($(this).offset())
             d3.select("#selectedBorder > rect")
                 .attr("x", borderParams.left - 22 - $(window).scrollLeft())
-                .attr('y', borderParams.top - 88)
+                .attr('y', borderParams.top - 64)
 //            d3.select(this).style("border", "1px solid #ddd")
             d3.selectAll("#SvgHolder > *").remove();
             displayFullTeamInfo(data, this.children[0].children[0].getAttribute("team-name"), svgHolder, selectedSizes)
@@ -329,6 +329,8 @@ function createChart(svg, sizes) {
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
                 if(val1>3)
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                if (val1>5)
+                    val1=5
                 val=val1;
            }
 
@@ -368,6 +370,8 @@ function recolorPlayers(){
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
                 if(val1>3)
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                if (val1>5)
+                    val1=5
                 val=val1;
            }
 
@@ -410,18 +414,22 @@ function createLegend(){
             } else {
                 d3.selectAll(".content ."+classSelect).each(function(d, i) {
                     d3.select(this).attr("class", function(d) {
-                        val =d[colorBy];
-
-                       if(colorBy !='status'){
-
-                            val = parseInt(parseInt(val)/max[colorBy])+1;
-                       }
-                       if(legendKey[colorBy].class[val] === undefined) {
-                           return legendKey[colorBy].class['other']
-                       }
-                       console.log(val)
-                       return legendKey[colorBy].class[val]
-                    })
+                    val =d[colorBy];
+                   if(colorBy !='status'){
+                        val1 = parseInt(parseInt(val)/max[colorBy])+1;
+                        if(val1>3)
+                            val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                        if (val1>5)
+                            val1=5
+                        val=val1;
+                   }
+        
+                   if(legendKey[colorBy].class[val] === undefined) {
+                       return legendKey[colorBy].class['other']
+                   }
+                   
+                   return legendKey[colorBy].class[val]
+                })
                 });
                 clickedDict[classSelect]=false;
                 d3.select(this).classed("unselected",false);
