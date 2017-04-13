@@ -10,8 +10,8 @@ var years, teams;
 var legendKey ={};
 //needed for legend - decide how many keys should be there
 legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
-                class: {"N/A": "gone", "ACT": "act", "OTHER_TEAM": "other_team", "SUS": "sus", "UDF": "udf", "other": "other"},
-               text: {"N/A": ["Not Active", 120], "ACT": ["Active", 107], "OTHER_TEAM": ["Other Team", 93], "SUS": ["Suspended", 101], "UDF": ["Unsigned Draft Pick", 106], "other": ["Other",120]} };
+                class: {"ACT": "act", "OTHER_TEAM": "other_team", "N/A": "gone", "SUS": "sus", "UDF": "udf", "other": "other"},
+               text: {"N/A": ["Not Active", 100], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 80], "SUS": ["Suspended", 105], "UDF": ["Unsigned Draft Pick", 108], "other": ["Other",120]} };
 
 legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
@@ -89,7 +89,9 @@ d3.json('draftScores.json', function(data) {
         .attr("width", selectedSizes.width);
     var afcSvgHolder = d3.select("#AFC");
     var nfcSvgHolder = d3.select("#NFC");
-    var previewSizes = {"width": 95 - margin.left - margin.right, "height": 90 - margin.top - margin.bottom, radius: 2};
+    var previewSizes = {"width": 95 - margin.left - margin.right, "height": 90 - margin.top - margin.bottom, radius: 2}
+    
+    
     for (var i = 0; i < Object.keys(selectOptions).length; i++) {
         var teamName = teamNames[Object.keys(selectOptions)[i]];
           
@@ -119,6 +121,7 @@ d3.json('draftScores.json', function(data) {
         });
      
         displayPlayerCircles(data, teamName, previewSvg, previewSizes)
+        
     }
     
 //    var borderParams = $(".Svg1").parent().offset()
@@ -138,6 +141,9 @@ d3.json('draftScores.json', function(data) {
 });
 
 function displayFullTeamInfo(data, teamName, svgHolder, selectedSizes) {
+    svgHolder.append("div")
+        .attr("id", "instruction")
+        .text("Click on a circle to see detailed player information!")
     var svg = createSvg(svgHolder, "selectedSvg","", selectedSizes.width, selectedSizes.height);
     teamNameDiv = svgHolder.insert("div", ":first-child")
                 .attr("class", "teamTitle")

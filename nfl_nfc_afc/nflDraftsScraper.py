@@ -32,7 +32,14 @@ def name(player, row):
     player['name'] = names[1] + ", " + names[0]
 #i%5==4 D
 def position(player, row):
-    player['position'] = row.contents[0]
+    position = row.contents[0]
+    if (position == 'OT'):
+        position = 'T'
+    if ('LB' in position):
+        position = 'LB'
+    if (position == 'SAF'):
+        position = 'S'
+    player['position'] = position
 #i%5==0 D
 def school(player, row):
     player['school'] = row.contents[0]

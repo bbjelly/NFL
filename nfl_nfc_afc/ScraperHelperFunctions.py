@@ -62,10 +62,10 @@ def mergeCombinedDraftsWithScores(scoreCsv, draftJson):
 
         newDraft.append(scoreDraft)
 
-    with open("draftScores2.json", "w") as outfile:
+    with open("draftScores.json", "w") as outfile:
         json.dump(newDraft, outfile, ensure_ascii=False, indent=4)
 
-    with open("missingNames2.txt", "w") as outfile:
+    with open("missingNames3.txt", "w") as outfile:
         outfile.writelines(missingNames)
 
 def _csvToDict(reader):

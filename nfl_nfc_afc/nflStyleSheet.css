@@ -234,7 +234,7 @@ span{
 /* TEAM DETAILED VIEW */
 .selectedSvg{
 /*    margin-left: 2%;*/
-    width: 40%;
+/*    width: 40%;*/
     transition: all 0.5s ease;
 }
 #SvgHolder {
@@ -248,6 +248,15 @@ span{
 .teamDiv svg{
     margin-right: -15px;
 
+}
+
+#instruction {
+    width: 390px;
+    /* float: right; */
+    display: flex;
+    margin-top: 22px;
+    margin-left: 774px;
+    position: absolute;
 }
 
 
@@ -302,7 +311,7 @@ span{
  .four{fill:#08519c}
  .five{fill:#08306b}
 
-.noinfo{fill:#3a3a3a}
+.noinfo{fill:#5a5a5a}
 
 
 .unselected{
