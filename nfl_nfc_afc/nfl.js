@@ -15,7 +15,7 @@ legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#
 
 legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-                text: {1: ["0-15", 120], 2: ["16-40", 120],3: ["41-80", 120], 4: ["81-120", 120], 5: ["121-200", 120], "other": ["Unavailable",115]} };
+                text: {1: ["0-15", 120], 2: ["16-31", 120],3: ["32-64", 120], 4: ["65-99", 120], 5: ["100-200", 120], "other": ["Unavailable",115]} };
 
 legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
@@ -329,11 +329,25 @@ function createChart(svg, sizes) {
     circleWrap.append("circle")
         .attr("class", function(d) {
             val =d[colorBy];
-           if(colorBy !='status'){
+           if(colorBy === 'ApproxValue'){
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
                 if(val1>3)
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
-                if (val1>5)
+                if (val1===5 && parseInt(val) < 70)
+                    val1= val1 - 1
+                else if (val1 >= 5) {
+                    val1 = 5
+                }
+                val=val1;
+           } else if (colorBy === 'GamesStarted') {
+                val1 = parseInt(parseInt(val)/max[colorBy])+1;
+                if(val1>3)
+                    val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                if (parseInt(val) == 64)
+                    val1 = val1 - 1
+                if (val1>=5 && parseInt(val) < 100)
+                    val1=val1-1
+                else if (val1 >= 5)
                     val1=5
                 val=val1;
            }
@@ -341,7 +355,7 @@ function createChart(svg, sizes) {
            if(legendKey[colorBy].class[val] === undefined) {
                return legendKey[colorBy].class['other']
            }
-//           console.log("val: " + val)
+//           console.log(val)
            return legendKey[colorBy].class[val]
         })
         .attr("r", radius)
@@ -371,17 +385,13 @@ function recolorPlayers(){
             val =d[colorBy];
            if(colorBy === 'ApproxValue'){
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
-                if (parseInt(val) >= 30) {
-                    console.log(d["team"] + " " + d["name"] + d["year"] + d["round"])
-                    console.log("val1: " + val1)
-                    val1 = val1 - 1
-                }
                 if(val1>3)
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
-                if (parseInt(val) >= 60)
-                    val1 = val1 - 1
-                if (val1>5)
-                    val1=5
+                if (val1===5 && parseInt(val) < 70)
+                    val1= val1 - 1
+                else if (val1 >= 5) {
+                    val1 = 5
+                }
                 val=val1;
            } else if (colorBy === 'GamesStarted') {
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
@@ -389,7 +399,9 @@ function recolorPlayers(){
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
                 if (parseInt(val) == 64)
                     val1 = val1 - 1
-                if (val1>5)
+                if (val1>=5 && parseInt(val) < 100)
+                    val1=val1-1
+                else if (val1 >= 5)
                     val1=5
                 val=val1;
            }

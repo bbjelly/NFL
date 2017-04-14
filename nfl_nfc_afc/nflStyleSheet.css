@@ -370,7 +370,7 @@ fill:#424343!important;
 .help-tip:before{
 	content:'?';
 	font-weight: bold;
-	color:#fff;
+	color:#cecece;
     opacity: 0.8;
 }
 
@@ -386,7 +386,7 @@ fill:#424343!important;
 .help-tip p{	/* The tooltip */
 	display: none;
 	text-align: left;
-	background-color: #1E2021;
+	background-color: ##494949;
 	padding: 20px;
 	width: 300px;
 	position: absolute;
