@@ -9,9 +9,9 @@ var years, teams;
 
 var legendKey ={};
 //needed for legend - decide how many keys should be there
-legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
-                class: {"ACT": "act", "OTHER_TEAM": "other_team", "N/A": "gone", "SUS": "sus", "UDF": "udf", "other": "other"},
-               text: {"N/A": ["Not Active", 100], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 80], "SUS": ["Suspended", 105], "UDF": ["Unsigned Draft Pick", 108], "other": ["Other",120]} };
+legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "OTHER_TEAM": "#A2AFEF"},
+                class: {"ACT": "act", "OTHER_TEAM": "other_team", "N/A": "gone", "SUS": "sus"},
+               text: {"N/A": ["Not Active", 100], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 80], "SUS": ["Suspended", 105]} };
 
 legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
