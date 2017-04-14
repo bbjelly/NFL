@@ -2041,7 +2041,7 @@
         "selNum": "132"
     }, 
     {
-        "status": "ACT", 
+        "status": "SUS", 
         "division": "AFC", 
         "school": "Louisiana Tech", 
         "name": "Dixon, Kenneth", 
@@ -8385,7 +8385,7 @@
         "selNum": "27"
     }, 
     {
-        "status": "ACT", 
+        "status": "SUS", 
         "division": "NFC", 
         "school": "Nebraska", 
         "name": "Gregory, Randy", 

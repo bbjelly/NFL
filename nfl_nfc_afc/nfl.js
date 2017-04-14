@@ -15,19 +15,19 @@ legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#
 
 legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-                text: {1: ["0-20", 120], 2: ["21-40", 120],3: ["41-80", 120], 4: ["81-120", 120], 5: ["121-200", 120], "other": ["Unavailable",115]} };
+                text: {1: ["0-15", 120], 2: ["16-40", 120],3: ["41-80", 120], 4: ["81-120", 120], 5: ["121-200", 120], "other": ["Unavailable",115]} };
 
 legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-               text: {1: ["0-15", 120], 2: ["16-30", 120],3: ["31-60", 120], 4: ["61-90", 120], 5: ["91-150", 120], "other": ["Unavailable",115]} };
+               text: {1: ["0-9", 120], 2: ["10-19", 120],3: ["20-39", 120], 4: ["40-69", 120], 5: ["70-150", 120], "other": ["Unavailable",115]} };
 
 
 NFC_AFC_DIVISIONS = {'New Orleans Saints': 'NFC', 'Pittsburgh Steelers': 'AFC', 'New England Patriots': 'AFC', 'Tampa Bay Buccaneers': 'NFC', 'Philadelphia Eagles': 'NFC', 'Atlanta Falcons': 'NFC', 'Cleveland Browns': 'AFC', 'Cincinnati Bengals': 'AFC', 'Los Angeles Chargers': 'AFC', 'Oakland Raiders': 'AFC', 'Buffalo Bills': 'AFC', 'New York Giants': 'NFC', 'Detroit Lions': 'NFC', 'Los Angeles Rams': 'NFC', 'Carolina Panthers': 'NFC', 'San Francisco 49ers': 'NFC', 'Indianapolis Colts': 'AFC', 'Seattle Seahawks': 'NFC', 'Arizona Cardinals': 'NFC', 'Houston Texans': 'AFC', 'Tennessee Titans': 'AFC', 'Jacksonville Jaguars': 'AFC', 'Chicago Bears': 'NFC', 'Washington Redskins': 'NFC', 'Miami Dolphins': 'AFC', 'New York Jets': 'AFC', 'Baltimore Ravens': 'AFC', 'Kansas City Chiefs': 'AFC', 'Denver Broncos': 'AFC', 'Green Bay Packers': 'NFC', 'Minnesota Vikings': 'NFC', 'Dallas Cowboys': 'NFC'};
 
 var border,colorBy='status';
 max = {
-    'GamesStarted':20,
-    'ApproxValue':15
+    'GamesStarted':16,
+    'ApproxValue':10
 
 }
 
@@ -110,8 +110,6 @@ d3.json('draftScores.json', function(data) {
         onPreviewHover(previewHolder);
         previewHolder.on("click", function(d) {
             var borderParams = $(this).offset()
-            console.log(this.offsetTop)
-            console.log($(this).offset())
             d3.select("#selectedBorder > rect")
                 .attr("x", borderParams.left - 22 - $(window).scrollLeft())
                 .attr('y', borderParams.top - 64)
@@ -343,7 +341,7 @@ function createChart(svg, sizes) {
            if(legendKey[colorBy].class[val] === undefined) {
                return legendKey[colorBy].class['other']
            }
-           console.log(val)
+//           console.log("val: " + val)
            return legendKey[colorBy].class[val]
         })
         .attr("r", radius)
@@ -368,14 +366,29 @@ function createChart(svg, sizes) {
 
 
 function recolorPlayers(){
-
     d3.selectAll(".content circle")
          .attr("class", function(d) {
             val =d[colorBy];
-           if(colorBy !='status'){
+           if(colorBy === 'ApproxValue'){
+                val1 = parseInt(parseInt(val)/max[colorBy])+1;
+                if (parseInt(val) >= 30) {
+                    console.log(d["team"] + " " + d["name"] + d["year"] + d["round"])
+                    console.log("val1: " + val1)
+                    val1 = val1 - 1
+                }
+                if(val1>3)
+                    val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                if (parseInt(val) >= 60)
+                    val1 = val1 - 1
+                if (val1>5)
+                    val1=5
+                val=val1;
+           } else if (colorBy === 'GamesStarted') {
                 val1 = parseInt(parseInt(val)/max[colorBy])+1;
                 if(val1>3)
                     val1 =parseInt(parseInt(val)/(2*max[colorBy]))+2;
+                if (parseInt(val) == 64)
+                    val1 = val1 - 1
                 if (val1>5)
                     val1=5
                 val=val1;
@@ -384,7 +397,7 @@ function recolorPlayers(){
            if(legendKey[colorBy].class[val] === undefined) {
                return legendKey[colorBy].class['other']
            }
-           console.log(val)
+//           console.log(val)
            return legendKey[colorBy].class[val]
         })
 

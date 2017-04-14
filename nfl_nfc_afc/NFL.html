@@ -11,9 +11,17 @@
 <body>
     <div id = "header">
         <div class="inputs">
-            <label><input checked="checked" value="status" name="playercolor" type="radio">Player Status</label>
-            <label title="As calculated from http://www.pro-football-reference.com/"><input value="GamesStarted" name="playercolor" type="radio">Games Started</label>
-            <label title="As calculated from http://www.pro-football-reference.com/"><input value="ApproxValue" name="playercolor" type="radio">Approximate Value</label>
+            <label title="Current status of players"><input checked="checked" value="status" name="playercolor" type="radio">Player Status</label>
+            <label title="Number of times the (offensive or defensive) player was picked as a game starter (As calculated from http://www.pro-football-reference.com/)"><input value="GamesStarted" name="playercolor" type="radio">Games Started</label>
+            <label title="Single score value assigned to the player (As calculated from http://www.pro-football-reference.com/)"><input value="ApproxValue" name="playercolor" type="radio">Approximate Value</label>
+        </div>
+        <div class="help-tip">
+            <p>
+               For detailed draft history view of a team, click on the mini version of the chart.<br>
+                For simple player information, mouse-over the circles in detailed draft history view. <br>
+                To see more details about the player, click on a circle in detailed draft history view. <br>
+                For more information about the three modes, hover over the names of the modes.
+            </p>
         </div>
         <h1>NFL Draft</h1>
         <hr style="width: 100%;">
