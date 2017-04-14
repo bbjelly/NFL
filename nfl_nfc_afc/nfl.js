@@ -705,7 +705,7 @@ function addHoverPreview(svg) {
 
             divText
                 .append("div")
-                .text("Status: " + d['status'])
+                .text("Status: " + legendKey['status'].text[d['status']][0])
 
             divText
                 .append("div")
