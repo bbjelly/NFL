@@ -17,7 +17,7 @@ legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "gr
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
                 text: {1: ["0-15", 120], 2: ["16-31", 120],3: ["32-64", 120], 4: ["65-99", 120], 5: ["100-200", 120], "other": ["Unavailable",115]} };
 
-legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
+legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "grey", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
                text: {1: ["0-9", 120], 2: ["10-19", 120],3: ["20-39", 120], 4: ["40-69", 120], 5: ["70-150", 120], "other": ["Unavailable",115]} };
 
@@ -111,7 +111,7 @@ d3.json('draftScores.json', function(data) {
         previewHolder.on("click", function(d) {
             var borderParams = $(this).offset()
             d3.select("#selectedBorder > rect")
-                .attr("x", borderParams.left - 22 - $(window).scrollLeft())
+                .attr("x", borderParams.left - 8 - $(window).scrollLeft())
                 .attr('y', borderParams.top - 64)
 //            d3.select(this).style("border", "1px solid #ddd")
             d3.selectAll("#SvgHolder > *").remove();
@@ -423,7 +423,7 @@ function createLegend(){
     d3.select("#legend svg").remove();
     var svgOrig = d3.select("#legend").append("svg")
         .attr("width", "700px") //to keep it below the svg files above
-        .attr("height", "75px");
+        .attr("height", "55px");
     var legend = svgOrig.append("g")
         .attr("class", "legend")
         .attr("transform","translate(45,5)");
