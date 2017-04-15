@@ -9,6 +9,7 @@
     <script src = "nfl.js"></script>
 </head>
 <body>
+    <div>
     <div id = "header">
         <div class="inputs">
             <label title="Current status of players"><input checked="checked" value="status" name="playercolor" type="radio">Player Status</label>
@@ -16,22 +17,28 @@
             <label title="Single score value assigned to the player (As calculated from http://www.pro-football-reference.com/)"><input value="ApproxValue" name="playercolor" type="radio">Approximate Value</label>
         </div>
         <div class="help-tip">
-            <p>
-               For detailed draft history view of a team, click on the mini version of the chart.<br>
-                For simple player information, mouse-over the circles in detailed draft history view. <br>
-                To see more details about the player, click on a circle in detailed draft history view. <br>
-                For more information about the three modes, hover over the names of the modes.
-            </p>
+            <div>
+                <h4 style="text-align:center;color:white">Visualization Overview</h4>
+                This visualization presents each NFL team's drafting history. For each team, the past 10 years of draft choices are shown.
+                Each circle is a player. Inside the circle is the position of the player. The circles are colored using that player's value for the selected mode - Player Status, Approximate Value and Games Started.
+                <ul>
+                    <li>Clicking on the mini version of any team's draft history displays the team's history details in space below</li>
+                    <li>For basic player information, mouse-over the circles in the detailed draft view. </li>
+                    <li>To see complete information about a player, click on the player circle in the detailed draft view </li>
+                    <li>For more information about the three modes, hover over the names of the modes.</li>
+                </ul>
+            </div>
+
         </div>
         <h1>NFL Draft</h1>
-        <hr style="width: 100%;">
-    <div id = "positionCheck"></div>
     <div id="legend"></div>
 
+    <div id = "positionCheck"></div>
+    <hr style="width: 100%;">
     </div>
 
 
-    <div style="float:left; margin-left:20px;height: 900px;margin-top:50px" class="content">
+    <div  class="content">
         <div class="year">Years</div>
          <div class="round">Rounds</div>
         <div class="axis-info"></div>
@@ -55,4 +62,5 @@
     </div>
 
 </div>
+        </div>
 </body>

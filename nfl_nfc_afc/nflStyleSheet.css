@@ -10,7 +10,6 @@ body {
 #header {
     margin-bottom: 20px;
     color: #F6F6F6;
-    margin-left: 10px;
     position: fixed;
     width: 100%;
     top: 0;
@@ -27,9 +26,10 @@ hr{
 
 h1{
         font-family: "Montserrat", Arial, sans-serif;
-    /* color: black; */
-    font-weight: normal;
+        /* color: black; */
+        font-weight: normal;
         margin: 10px;
+        float: left;
 }
 text{
     font-weight: normal;
@@ -98,13 +98,15 @@ text {
 }
 .previewWrap {
     position:absolute;
-    border:3px solid #ccc;
+    border: 1px solid #555;
     background:#333;
     padding:5px;
-    //display:none;
+    //
+    display:none;
     color:#fff;
-    box-shadow: 4px 4px 3px rgba(103, 115, 130, 1);
-    opacity:0.9
+    box-shadow: 2px 1px 3px rgba(103, 115, 130, 1);
+    opacity: 0.9;
+    font-size: 13px;
 }
 
 /*CIRCLES*/
@@ -119,12 +121,12 @@ circle{
 }
 
 .act {
-    fill: lightgreen;
+    fill: #89f789;
     opacity: 0.8;
     transition: all 0.5s ease;
 }
 .sus {
-    fill: #D7D6D6;
+    fill: #FFEB3B;
     opacity: 0.8;
 }
 .udf {
@@ -132,7 +134,7 @@ circle{
     opacity: 0.8;
 }
 .other_team {
-    fill: #A2AFEF;
+    fill: #778eff;
     opacity: 0.8;
 }
 .other {
@@ -212,9 +214,8 @@ span{
 }
 
 #selectedBorder {
-    width: 1350px;
+    width: 1260px;
     height: 250px;
-    margin-top: 10px;
 }
 #selectedBorder rect {
     fill: none;
@@ -229,7 +230,7 @@ span{
 }
 #SvgHolder {
     display: flex;
-    margin-left: 5%;
+    margin-left: 0%;
     position: absolute;
     margin-top: 210px;
     transition: all 0.8s ease;
@@ -241,14 +242,14 @@ span{
 }
 
 #instruction {
-    width: 390px;
+    /* width: 390px; */
     /* float: right; */
     display: flex;
-    margin-top: 22px;
-    margin-left: 774px;
+    right: 30px;
+    top: 30px;
     position: absolute;
     font-size: 13px;
-    color: #6a6a6a;
+    color: #8f8f8f;
 }
 
 
@@ -258,9 +259,10 @@ span{
 
 .text-muted{
         background: #3e3e3e;
-    display: inline-block;
-    padding: 5px;
-    width: 100%;
+        display: inline-block;
+        padding: 5px;
+        width: 100%;
+        font-size: 12px;
 }
 
 /*LOGOS*/
@@ -289,33 +291,33 @@ span{
 
 /*LEGEND*/
 #legend{
-    float: right;
-    position: absolute;
+    float: left;
+    /* position: absolute; */
     /* left: 650px; */
-    right: 0;
-    top: 10px;
+    right: 100px;
+    /* top: 10px; */
     fill: white;
     font-size:14px;
+    margin-left: 25px;
 }
 .inputs{
         position: absolute;
-    left: 180px;
-    z-index: 10000;
-    font-size:12px;
-
+        right: 200px;
+        z-index: 10000;
+        font-size: 12px;
 }
 
 .inputs label {
     display: block;
 }
 
-.one{fill:rgb(239,243,255)}
-.two{fill:#98bfe5}
-.three{fill:#4292c6}
- .four{fill:#08519c}
- .five{fill:#08306b}
+.one{fill: rgb(255, 229, 191);}
+.two{fill: #ffc269;}
+.three{fill: #e18a0a;}
+ .four{fill: #e14412;}
+ .five{fill: #972704;}
 
-.noinfo{fill:#5a5a5a}
+.noinfo{fill: #878787;}
 
 
 .unselected{
@@ -325,12 +327,15 @@ fill:#424343!important;
 
 .year{
 
-   position: absolute;
-    top: 76px;
-    left: 39px;
-    font-size: 10px;
-    color: gray;
+position: absolute;
 
+top: 80px;
+
+left: 15px;
+
+font-size: 10px;
+
+color: gray;
 }
 
 .round{
@@ -347,8 +352,8 @@ fill:#424343!important;
     height: 100px;
     width: 100px;
     position: absolute;
-    margin-top: 13px;
-    margin-left: 37px;
+    margin-top: 8px;
+    margin-left: 33px;
 }
 
 /*Help Tip*/
@@ -365,6 +370,7 @@ fill:#424343!important;
 	font-size: 13px;
 	line-height: 26px;
 	cursor: default;
+	z-index: 1000000;
 }
 
 .help-tip:before{
@@ -374,7 +380,7 @@ fill:#424343!important;
     opacity: 0.8;
 }
 
-.help-tip:hover p {
+.help-tip:hover div {
 	display:block;
 	transform-origin: 100% 0%;
 
@@ -383,33 +389,36 @@ fill:#424343!important;
 
 }
 
-.help-tip p{	/* The tooltip */
+.help-tip div{	/* The tooltip */
 	display: none;
 	text-align: left;
 	background-color: ##494949;
-	padding: 20px;
+	padding: 10px;
 	width: 300px;
 	position: absolute;
 	border-radius: 3px;
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 	right: -4px;
-	color: #FFF;
+	color: #fffbd9;
 	font-size: 13px;
 	line-height: 1.4;
+	background: #434343;
+	border: 1px solid #575757;
+	z-index: 100000;
 }
 
-.help-tip p:before{ /* The pointer of the tooltip */
+.help-tip div:before{ /* The pointer of the tooltip */
 	position: absolute;
 	content: '';
 	width:0;
 	height: 0;
 	border:6px solid transparent;
-	border-bottom-color:#1E2021;
+	border-bottom-color: #6c6c6c;
 	right:10px;
 	top:-12px;
 }
 
-.help-tip p:after{ /* Prevents the tooltip from being hidden */
+.help-tip div:after{ /* Prevents the tooltip from being hidden */
 	width:100%;
 	height:40px;
 	content:'';
@@ -421,8 +430,8 @@ fill:#424343!important;
 /* CSS animation */
 
 @-webkit-keyframes fadeIn {
-	0% { 
-		opacity:0; 
+	0% {
+		opacity:0;
 		transform: scale(0.6);
 	}
 
@@ -435,4 +444,19 @@ fill:#424343!important;
 @keyframes fadeIn {
 	0% { opacity:0; }
 	100% { opacity:100%; }
+}
+
+.content{
+
+/* float: left; */
+
+/* margin-left: 20px; */
+
+height: 900px;
+
+/* margin-top: 50px; */
+
+width: 100%;
+
+margin: 65px 5px;
 }
