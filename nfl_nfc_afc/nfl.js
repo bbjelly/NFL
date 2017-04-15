@@ -9,7 +9,7 @@ var years, teams;
 
 var legendKey ={};
 //needed for legend - decide how many keys should be there
-legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "lightgreen", "SUS": "#D7D6D6", "OTHER_TEAM": "#A2AFEF"},
+legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "gray", "SUS": "#D7D6D6", "OTHER_TEAM": "#A2AFEF"},
                 class: {"ACT": "act", "OTHER_TEAM": "other_team", "N/A": "gone", "SUS": "sus"},
                text: {"N/A": ["Not Active", 160], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 150], "SUS": ["Suspended", 165]} };
 
@@ -493,11 +493,11 @@ function mouseClick(svg, mcDraft, clickProf) {
                     }
                     if (draftsFilteredByTeamName.prevCircle !== undefined) {
                         //Unhighlight the previously selected circle
-                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke", function() {
-                            return legendKey[colorBy].basic[draftsFilteredByTeamName.prevCircle.className.baseVal.toUpperCase()];
-                        });
+//                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke", function() {
+//                            return legendKey[colorBy].basic[draftsFilteredByTeamName.prevCircle.className.baseVal.toUpperCase()];
+//                        });
 
-                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-opacity", "1");
+                        d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-opacity", "0");
                         d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-width", "2px")
                     
                     }
@@ -641,11 +641,8 @@ function mouseClick(svg, mcDraft, clickProf) {
                     
                     //Unhighlight the circle and go back to normal styling
                     var childCircle = this.childNodes[0];
-                    d3.select(childCircle).style("stroke", function(d) {
-                        return legendKey[colorBy].basic[childCircle.className.baseVal.toUpperCase()];
-                    });
 
-                    d3.select(childCircle).style("stroke-opacity", "1");
+                    d3.select(childCircle).style("stroke-opacity", "0");
                     d3.select(childCircle).style("stroke-width", "2px")
                     
                 }
