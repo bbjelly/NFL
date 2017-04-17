@@ -11,15 +11,15 @@ var legendKey ={};
 //needed for legend - decide how many keys should be there
 legendKey['status'] = {basic: {"GONE": "#FF3838", "ACT": "gray", "SUS": "#D7D6D6", "OTHER_TEAM": "#A2AFEF"},
                 class: {"ACT": "act", "OTHER_TEAM": "other_team", "N/A": "gone", "SUS": "sus"},
-               text: {"N/A": ["Not Active", 160], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 150], "SUS": ["Suspended", 165]} };
+               text: {"N/A": ["Not Active", 85], "ACT": ["Active", 90], "OTHER_TEAM": ["Other Team", 68], "SUS": ["Suspended", 88]} };
 
 legendKey['GamesStarted'] = {basic: {1: 'green', 2: 'blue', 3: "#D7D6D6", 4: "grey", 5: "#A2AFEF", "noinfo": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-                text: {1: ["0-15", 120], 2: ["16-31", 120],3: ["32-64", 120], 4: ["65-99", 120], 5: ["100-200", 120], "other": ["Unavailable",115]} };
+                text: {1: ["0-15", 120], 2: ["16-31", 58],3: ["32-64", 61], 4: ["65-99", 63], 5: ["100-200", 64], "other": ["Unavailable",68]} };
 
 legendKey['ApproxValue'] = {basic: {"GONE": "#FF3838", "ACT": "grey", "SUS": "#D7D6D6", "UDF": "grey", "OTHER_TEAM": "#A2AFEF", "other": "gold"},
                 class: {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", "other": "noinfo"},
-               text: {1: ["0-9", 120], 2: ["10-19", 120],3: ["20-39", 120], 4: ["40-69", 120], 5: ["70-150", 120], "other": ["Unavailable",115]} };
+               text: {1: ["0-9", 120], 2: ["10-19", 51],3: ["20-39", 58], 4: ["40-69", 61], 5: ["70-150", 63], "other": ["Unavailable",65]} };
 
 
 NFC_AFC_DIVISIONS = {'New Orleans Saints': 'NFC', 'Pittsburgh Steelers': 'AFC', 'New England Patriots': 'AFC', 'Tampa Bay Buccaneers': 'NFC', 'Philadelphia Eagles': 'NFC', 'Atlanta Falcons': 'NFC', 'Cleveland Browns': 'AFC', 'Cincinnati Bengals': 'AFC', 'Los Angeles Chargers': 'AFC', 'Oakland Raiders': 'AFC', 'Buffalo Bills': 'AFC', 'New York Giants': 'NFC', 'Detroit Lions': 'NFC', 'Los Angeles Rams': 'NFC', 'Carolina Panthers': 'NFC', 'San Francisco 49ers': 'NFC', 'Indianapolis Colts': 'AFC', 'Seattle Seahawks': 'NFC', 'Arizona Cardinals': 'NFC', 'Houston Texans': 'AFC', 'Tennessee Titans': 'AFC', 'Jacksonville Jaguars': 'AFC', 'Chicago Bears': 'NFC', 'Washington Redskins': 'NFC', 'Miami Dolphins': 'AFC', 'New York Jets': 'AFC', 'Baltimore Ravens': 'AFC', 'Kansas City Chiefs': 'AFC', 'Denver Broncos': 'AFC', 'Green Bay Packers': 'NFC', 'Minnesota Vikings': 'NFC', 'Dallas Cowboys': 'NFC'};
@@ -132,6 +132,34 @@ d3.json('draftScores.json', function(data) {
     $(".teamDiv"+1).trigger("click");
     d3.select(".content").append("div")
         .attr("id", "clickProf")
+    
+    // Get rid of player information
+    $("#SvgHolder").click(function(e) {
+        if (!$(e.target).is("circle")) {
+            d3.select("#clickProf > *").remove()
+            if (draftsFilteredByTeamName.active !== undefined) {
+                draftsFilteredByTeamName.active.clicked = false;
+            }
+            if (draftsFilteredByTeamName.prevCircle !== undefined) {
+                d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-opacity", "0");
+                d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-width", "2px")
+
+            }
+        }
+    })
+//    d3.select("#SvgHolder").on("click", function(d) {
+//        d3.select("#clickProf > *").remove()
+//        if (draftsFilteredByTeamName.active !== undefined) {
+//            draftsFilteredByTeamName.active.clicked = false;
+//        }
+//        if (draftsFilteredByTeamName.prevCircle !== undefined) {
+//            d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-opacity", "0");
+//            d3.select(draftsFilteredByTeamName.prevCircle).style("stroke-width", "2px")
+//
+//        }
+//        
+//    })
+    
     
     createLegend()
 
